@@ -42,6 +42,7 @@ import VerifyUser from "../component/AuthPages/Dashboard/Support/VerifyUser/Veri
 import UserDetails from "../component/AuthPages/Dashboard/Support/UserDetails/UserDetails";
 import BookService from "../component/AuthPages/Dashboard/Support/BookService/BookService";
 import Dashboard from "../component/AuthPages/Dashboard/Shared/Dashboard";
+import GalleryPage from "../component/UserPages/GalleryPage/GalleryPage";
 
 
 
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/galleryPage",
+        element: <GalleryPage/>,
       },
       {
         path: "/blog",

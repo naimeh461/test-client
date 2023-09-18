@@ -79,8 +79,7 @@ const ProfileDropLinks = () => {
   return (
     <>
       <li><Link className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" to='/myProfile'>Profile</Link></li>
-      <li><Link className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" to='/dashboard'>Dashboard</Link></li>
-      <li><Link className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" to='/settings'>Settings</Link></li>
+      <li><Link className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" to='/settings'>Payment History</Link></li>
 
     </>
   )
