@@ -1,0 +1,36 @@
+import { Helmet } from "react-helmet";
+import HowItWork from "./HowItWork/HowItWork";
+import Gallery from "./gellary/Gallery";
+import BestRecommendation from "./BestRecommendation/BestRecommendation";
+import WhyChooseUs from "./WhyChooseUs/WhyChooseUs";
+import HomeBanner from "./HomeBanner/HomeBanner";
+import HappyStory from "./HappyStory/HappyStory";
+
+
+const Home = () => {
+  
+  return (
+
+    <>
+    <Helmet>
+      <meta charSet="utf-8" />
+      <title>Soulmate | Home</title>
+    </Helmet>
+    <div className=" overflow-x-hidden md:overflow-visible lg:overflow-x-hidden">
+    <HomeBanner></HomeBanner>
+    <HowItWork/>
+    <WhyChooseUs></WhyChooseUs>
+    <BestRecommendation />
+    <div className="w-[80%] mx-auto">
+      <Gallery/>
+      <HappyStory></HappyStory>
+    </div>
+  
+
+    </div>
+  </>
+  );
+}
+export default Home;
+
+

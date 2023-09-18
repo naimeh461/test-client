@@ -1,0 +1,21 @@
+
+  .footer {
+    position: sticky;
+    bottom: 0;
+    background-color: #080373; /* Change this to your desired background color */
+    color: white;
+    text-align: center;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    border-radius: 2px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #738384;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: #EDF2F7;
+  }

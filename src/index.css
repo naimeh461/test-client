@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Alice&family=Lato&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.red-primary {
+    @apply bg-[#fa604c] text-white
+}
+
+.red-text {
+    @apply text-[#fa604c]
+}
+
+.secondary {
+    @apply bg-[#EBFFF6]
+}
+
+.font-alice{
+    font-family: 'Alice', serif;
+}
+
+.font-lato{
+    font-family: 'Lato', sans-serif;
+}
+
+.font-soul {
+    font-family: 'Pacifico', cursive;
+}
+
+/* .swiper-wrapper{
+    @apply py-8 px-4
+} */
+
+.navStyle a.active {
+    background-color: blue;
+}
+
+.center-div {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.font-plans {
+    font-family: 'Lora', serif;
+}
+
+.font-poppins {
+    font-family: 'Poppins', sans-serif;
+}
+
+.font-cinzel {
+    font-family: 'Cinzel Decorative', cursive;
+
+
+}
+
+/* scrollbar style */
+.hide-scrollbar::-webkit-scrollbar {
+    width: 0.4em;
+}
+
+.hide-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.hide-scrollbar::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border: none;
+}
+.font-alice{
+    font-family: 'Alice', serif;
+}
+
+
+#text-shadow {
+    text-shadow: 0 0 0px #fff, 0 0 5px #fff, 0 0 0px #fff, 0 0 0px #97a5ff, 0 0 20px #97a5ff, 0 0 5px #97a5ff, 0 0 50px #97a5ff, 0 0 70px #97a5ff;;
+}
+.font-lato{
+    font-family: 'Lato', serif;
+
+}
+
+.react-datepicker__input-container input{
+    @apply text-[18px] font-medium font-lato rounded-full py-5 pl-7 pr-7 bg-gray-50 border border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+}
+
+/* for leaflet map */
+.leaflet-pane{
+    @apply z-10
+}
+
+.link-shadow {
+    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+}

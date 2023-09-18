@@ -1,0 +1,57 @@
+
+
+
+.timeline {
+  margin: 0 auto;
+  padding: 25px;
+  display: grid;
+  grid-template-columns: 1fr 3px 1fr;
+  font-family: "Fira Sans", sans-serif;
+  color: #ffffff;
+}
+
+.timeline__component {
+  margin: 0 20px 20px 20px;
+}
+
+.timeline__component--bg {
+  padding: 1.5em;
+  width: 519px;
+}
+
+/* LEAVE TILL LAST */
+
+
+.timeline__middle {
+  position: relative;
+  background: #E7C7B1;
+  border: 1px dashed 
+}
+
+.timeline__point {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  background: #E7C7B1;
+  border-radius: 50%;
+
+}
+
+/* LEAVE TILL LAST */
+.timeline__point--bottom {
+  top: initial;
+  bottom: 0;
+}
+
+
+  
+@media only screen and (max-width: 976px){
+      .timeline {
+          grid-template-columns: 3px 1fr; 
+        }
+  
+  }
+  
