@@ -19,9 +19,7 @@ const PaymentPage = () => {
           <span className="text-[#0F7173] dark:text-cyan-300">Your Need</span>
         </p>
         <p className="text-[#3E4A5B] font-lato text-center px-8 my-[18px] dark:text-gray-200">
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry&rsquo;s standard dummy
-          text ever since the 1500s
+        Unlock premium features and enhance your matrimony experience. Choose a plan that suits you best and start your journey to finding your life partner today.
         </p>
       </div>
       <div className="grid grid-cols-2 gap-4 my-6 ">
@@ -32,7 +30,7 @@ const PaymentPage = () => {
             alt=""
           />
         </div>
-        <div className="w-full bg-slate-50 p-2 rounded-md">
+        <div className="w-full bg-slate-50 p-2 rounded-md dark:bg-gray-400">
           <h3 className="dark:text-white text-center my-2 font-bold text-red-500">
             Select Your Favourite Payment Method
             <hr className="my-4" />

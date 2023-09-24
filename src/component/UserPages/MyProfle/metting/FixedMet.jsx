@@ -3,20 +3,21 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../../Provider/AuthProvider";
 import axios from "axios";
 import Swal from "sweetalert2";
-import message from "../../../../assets/other/message.svg";
+import { RxCross2 } from "react-icons/rx";
+import { IoLocationSharp } from "react-icons/io5";
 
-const FixedMet = ({ partnerUser }) => {
-  const { _id, name } = partnerUser;
+const FixedMet = ({ partnerUserID }) => {
   const [showModal8, setShowModal8] = useState(false);
   const { register, handleSubmit } = useForm();
   const [userInfo, setUserInfo] = useState([]);
   const { user, loading } = useContext(AuthContext);
   const [metForm, setMetForm] = useState(true);
 
+
   useEffect(() => {
     axios
       .get(
-        `https://soulmates-server.vercel.app/userPlanInfo?email=${user?.email}`
+        `http://localhost:5000/userPlanInfo?email=${user?.email}`
       )
       .then((response) => {
         setUserInfo(response.data);
@@ -32,13 +33,18 @@ const FixedMet = ({ partnerUser }) => {
     const setMet = {
       userId: userInfo._id,
       partner: data.id,
+      title: data.title,
+      descript: data.descript,
+      location: data.location,
       metDate: new Date(data.date),
       status: "pending",
     };
 
+    console.log(setMet);
+
     axios
       .post(
-        `https://soulmates-server.vercel.app/setMeeting?email=${user?.email}`,
+        `http://localhost:5000/setMeeting?email=${user?.email}`,
         setMet
       )
       .then((response) => {
@@ -49,58 +55,108 @@ const FixedMet = ({ partnerUser }) => {
       });
   };
 
+
+
   return (
     <div>
       <button
         onClick={showModal}
-        className="bg-[#3E4A5B] text-[#F0F2F5] px-[15px] py-[10px] rounded-full flex gap-1 items-center"
+        className="py-4 px-6 bg-[#128587] text-[#F0F2F5] rounded-full"
       >
-        <span>
-          <img className="hidden lg:block" src={message} alt="" />
-        </span>
-        Meeting
+        Invite Meeting
       </button>
       {showModal8 ? (
         <>
-          <div className="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-hidden md:inset-0 h-screen max-h-screen flex justify-center items-center bg-opacity-60 backdrop-blur-xl backdrop-filter bg-gray-300">
-            <div className="bg-white p-4 sm:p-10 rounded-lg shadow-2xl card relative">
+          <div className="fixed z-50 w-full overflow-hidden md:inset-0 h-screen max-h-screen flex justify-center items-center bg-opacity-40 backdrop-filter bg-black">
+            <div className="bg-white w-1/3 rounded-lg shadow-2xl card relative">
               <button
                 onClick={() => setShowModal8(false)}
-                className=" bg-[#FF725E] text-white py-2 px-4 rounded-md w-fit absolute top-2 right-2"
+                className=" text-[#FF725E] text-3xl font-bold w-fit absolute top-2 right-3"
               >
-                X
+                <RxCross2 />
               </button>
 
               {metForm ? (
                 <>
                   <div className="md:card-body ">
-                    <p className="text-lg font-medium text-center">
-                      Set Metting With {name}
-                    </p>
+                    <h1 className="text-3xl font-medium text-left">
+                      Schedule a Metting
+                    </h1>
                     <form onSubmit={handleSubmit(onSubmit)}>
                       <input
                         type="hidden"
-                        value={_id}
+                        value={partnerUserID}
                         className="w-full text-blue-950"
                         {...register("id", { required: true })}
                       />
 
+                      <div className="form-control mb-5">
+                        <label className="label">
+                          <span className="label-text font-bold">
+                            Meeting Title<span className="text-red-600">*</span>
+                          </span>
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Your meeting title is here"
+                          className="py-3 px-4 border border-[#FF725E] rounded-lg"
+                          {...register("title", { required: true })}
+                        />
+                      </div>
+
+                      <div className="form-control mb-5">
+                        <label className="label">
+                          <span className="label-text font-bold">
+                            Description
+                          </span>
+                        </label>
+                        <textarea
+                          placeholder="Write here.... (optional)"
+                          className="h-20 py-3 px-4 border border-[#FF725E] rounded-lg"
+                          {...register("descript")}
+                        ></textarea>
+                      </div>
+
+                      <div className="form-control mb-10">
+                        <label className="label">
+                          <span className="label-text font-bold">
+                            Set Metting Location
+                            <span className="text-red-600">*</span>
+                          </span>
+                        </label>
+                        <label className="input-group">
+                          <input
+                            type="location"
+                            placeholder="Choose your location"
+                            className="py-3 px-4 border border-[#FF725E] rounded-lg w-full"
+                            {...register("location", { required: true })}
+                          />
+                          <span className="text-2xl">
+                            <IoLocationSharp />
+                          </span>
+                        </label>
+                      </div>
+
                       <div className="form-control">
                         <label className="label">
-                          <span className="label-text">Select Your Date</span>
+                          <span className="label-text font-bold">
+                            Select Your Date
+                            <span className="text-red-600">*</span>
+                          </span>
                         </label>
                         <label className="input-group">
                           <span>Date</span>
                           <input
                             type="datetime-local"
-                            className="input input-bordered"
+                            className="py-3 px-4 border border-[#FF725E] rounded-lg w-full"
                             {...register("date", { required: true })}
                           />
                         </label>
                       </div>
+
                       <div className="mt-5 text-center">
-                        <button className="w-3/6 bg-[#FF725E] text-white py-2 px-4 rounded-md">
-                          Submit
+                        <button className="w-3/6 bg-[#FF725E] text-white font-bold py-2 px-4 rounded-lg">
+                          Send Invite
                         </button>
                       </div>
                     </form>

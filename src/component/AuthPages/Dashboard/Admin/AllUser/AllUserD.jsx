@@ -1,7 +1,8 @@
-import useAllUsers from "../../../../../hooks/useAllUsers";
+import useAllUsers from "../../../../../Hooks/useAllUsers";
 import AllUserDTr from "./AllUserDTr";
 const AllUserD = () => {
   const [users] = useAllUsers();
+  console.log(users)
   return (
     <div className="relative overflow-x-auto  rounded-2xl px-6 w-[75%] mx-auto py-6 my-5">
     <h1 className='text-black text-4xl my-5 text-center font-serif'>All User</h1>

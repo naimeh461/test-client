@@ -2,12 +2,18 @@ import { PiMagnifyingGlassPlusThin } from "react-icons/pi";
 import { BsArrowRightShort, BsTelephone } from "react-icons/bs";
 import { AiOutlineMail } from "react-icons/ai";
 import { CiLocationOn } from "react-icons/ci";
+import LightGallery from 'lightgallery/react';
+
+// import styles
+import 'lightgallery/css/lightgallery.css';
+import 'lightgallery/css/lg-zoom.css';
+import 'lightgallery/css/lg-thumbnail.css';
+import './style.css'
 import img2 from "../../../../assets/home/recommendation/girl.png";
 import img3 from "../../../../assets/home/recommendation/girl2.png";
 import img4 from "../../../../assets/home/recommendation/girl3.png";
 import img5 from "../../../../assets/home/recommendation/girl4.png";
 import location from "../../../../assets/other/location.svg";
-import follow from "../../../../assets/other/follow.svg";
 import share from "../../../../assets/other/share.svg";
 import bookmark from "../../../../assets/other/bookmark.svg";
 import ages from "../../../../assets/other/age.svg";
@@ -20,23 +26,31 @@ import insta from "../../../../assets/other/insta.svg";
 import twitter from "../../../../assets/other/twitter.svg";
 import { useEffect, useState } from "react";
 
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import FixedMet from "../metting/FixedMet";
 import useMyData from "../../../../Hooks/useMyData";
 import axios from "axios";
 import { RiUserUnfollowFill } from "react-icons/ri";
+import RelationSts from "../relationSts/RelationSts";
+import { performAction } from "../../../../utilities/utilities";
+
+const onInit = () => {
+  console.log('lightGallery has been initialized');
+};
+
+import lgThumbnail from 'lightgallery/plugins/thumbnail';
+import lgZoom from 'lightgallery/plugins/zoom';
 
 const Profile = () => {
-  const [userInfo,refetch] = useMyData();
+  const [userInfo, refetch] = useMyData();
   const params = useParams();
   const [user, setUser] = useState([]);
   const [loader, setLoader] = useState(true);
   const [disable, setDisable] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
-    fetch(
-      `https://soulmates-server.vercel.app/specificUser/${params.id}`
-    )
+    fetch(`http://localhost:5000/specificUser/${params.id}`)
       .then((res) => res.json())
       .then((data) => setUser(data));
   }, [params]);
@@ -64,10 +78,17 @@ const Profile = () => {
     yearlyIncome,
     drinkHabit,
     foodHabit,
-    interests,
+    interests
   } = user;
 
-  console.log(interests);
+
+  // function formatHeight(height) {
+  //   const heightParts = height.split(" ");
+  //   const feet = parseInt(heightParts[0]);
+  //   const inches = parseInt(heightParts[2]);
+  //   return `${feet}ft ${inches}in`;
+  // }
+
   useEffect(() => {
     if (userInfo?.profileVisit > 0) {
       setLoader(false);
@@ -77,7 +98,7 @@ const Profile = () => {
   useEffect(() => {
     axios
       .get(
-        `https://soulmates-server.vercel.app/disableFav/${userInfo._id}/${user._id}`
+        `http://localhost:5000/disableFav/${userInfo._id}/${user._id}`
       )
       .then((response) => {
         if (response.data.userId) {
@@ -93,39 +114,19 @@ const Profile = () => {
       favImg: user.profileImage,
     };
 
-    axios
-      .get(
-        `https://soulmates-server.vercel.app/showFlowing/${userInfo._id}`
-      )
-      .then((response) => {
-        if (response.data.userId) {
-          axios
-            .put(
-              `https://soulmates-server.vercel.app/makeFav/${userInfo._id}`,
-              favUser
-            )
-            .then((response) => {
-              if (response.data.modifiedCount > 0) {
-                setDisable(true);
-              }
-            });
-        } else {
-          axios
-            .post(
-              `https://soulmates-server.vercel.app/setFav/${userInfo._id}`,
-              favUser
-            )
-            .then((response) => {
-              if (response.data.insertedId) {
-                setDisable(true);
-              }
-            });
-        }
-      });
+    performAction(
+      userInfo._id,
+      "showFlowing",
+      "makeFav",
+      "setFav",
+      favUser,
+      () => {
+        setDisable(true);
+      }
+    );
   };
 
   const unfollowHandle = () => {
-    console.log("unfollow");
     const unfollow = {
       favId: user._id,
       favUser: user.name,
@@ -133,7 +134,7 @@ const Profile = () => {
     };
     axios
       .put(
-        `https://soulmates-server.vercel.app/makeUnfollow/${userInfo._id}`,
+        `http://localhost:5000/makeUnfollow/${userInfo._id}`,
         unfollow
       )
       .then((response) => {
@@ -143,19 +144,21 @@ const Profile = () => {
       });
   };
 
-    const handleClick = async () => 
-    {
-        try{
-            const res = await axios.get(`https://soulmates-server.vercel.app/conversations/find/${userInfo._id}/${params.id}`)
-            console.log(res.data)
-            navigate("/message");
-            refetch();
-        }
-        catch(err){
-            console.log(err)
-        }
-
+  const handleClick = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/conversations/find/${userInfo._id}/${params.id}`
+      );
+      console.log(res.data);
+      navigate("/message");
+      refetch();
+    } catch (err) {
+      console.log(err);
     }
+  };
+
+
+  
 
   return (
     <>
@@ -170,83 +173,39 @@ const Profile = () => {
         </>
       ) : (
         <>
-          <div className="max-w-7xl mx-auto">
+          <div className="w-[80%] mx-auto my-20">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-lato mt-4">
               {/* photo section */}
               <div className="">
                 <div className="sticky top-4">
                   {/* sticky the photo */}
                   {/* photo gallery */}
-                  <div className="flex flex-col md:flex-row gap-2">
-                    <img
-                      className="mx-4 md:mx-0 h-[590px] rounded-2xl object-cover"
-                      src={profileImage}
-                      alt=""
-                    />
+                  <div className="flex flex-col lg:flex-row gap-2 ">
+                    <img className={user?.gallery ? "mx-auto h-[590px] rounded-2xl object-cover w-[95%] lg:w-[75%]  " : "w-[98%] mx-auto h-[590px] rounded-2xl object-cover "} src={profileImage} alt="" />
 
-                    {/* small imgs */}
-                    <div className="flex flex-row md:flex-col gap-1 md:gap-4 px-1">
-                      {/* single small img */}
-                      <div className="relative group cursor-pointer">
-                        <img
-                          className="w-[145px] h-[133px] rounded-2xl object-cover "
-                          src={img2}
-                          alt=""
-                        />
-                        <div className="absolute center-div bg-black rounded-2xl duration-300 bg-opacity-50 h-0 w-0 group-hover:h-full group-hover:w-full ">
-                          <div className="w-full h-full flex items-center justify-center">
-                            <PiMagnifyingGlassPlusThin className="text-5xl text-primary-50" />
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* single small img */}
-                      <div className="relative group cursor-pointer">
-                        <img
-                          className="w-[145px] h-[133px] rounded-2xl object-cover "
-                          src={img3}
-                          alt=""
-                        />
-                        <div className="absolute center-div bg-black rounded-2xl duration-300 bg-opacity-50 h-0 w-0 group-hover:h-full group-hover:w-full ">
-                          <div className="w-full h-full flex items-center justify-center">
-                            <PiMagnifyingGlassPlusThin className="text-5xl text-primary-50" />
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* single small img */}
-                      <div className="relative group cursor-pointer">
-                        <img
-                          className="w-[145px] h-[133px] rounded-2xl object-cover "
-                          src={img4}
-                          alt=""
-                        />
-                        <div className="absolute center-div bg-black rounded-2xl duration-300 bg-opacity-50 h-0 w-0 group-hover:h-full group-hover:w-full ">
-                          <div className="w-full h-full flex items-center justify-center">
-                            <PiMagnifyingGlassPlusThin className="text-5xl text-primary-50" />
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* single small img */}
-                      <div className="relative group cursor-pointer">
-                        <img
-                          className="w-[145px] h-[133px] rounded-2xl object-cover "
-                          src={img5}
-                          alt=""
-                        />
-                        <div className="absolute center-div bg-black rounded-2xl duration-300 bg-opacity-50 h-0 w-0 group-hover:h-full group-hover:w-full ">
-                          <div className="w-full h-full flex items-center justify-center">
-                            <PiMagnifyingGlassPlusThin className="text-5xl text-primary-50" />
-                          </div>
-                        </div>
-                      </div>
+                    {/* Gallery imgs */}
+                      <div className="flex  gap-8 md:gap-4 px-1 hide-scrollbar overflow-x-scroll lg:overflow-y-scroll lg:h-[590px] soulContainer">
+                      {
+                        // user?.gallery?.map((img, index) => <GalleryImg key={index} img={img} />)
+                      }
+                        <LightGallery
+                          onInit={onInit}
+                          speed={500}
+                          plugins={[lgThumbnail, lgZoom]}
+                        >
+                          {
+                            user?.gallery?.map((img, index) => <GalleryImg key={index} img={img} />)
+                          }
+                        </LightGallery>
                     </div>
                     {/* small imgs end */}
                   </div>
                   {/* button */}
                   <div className="flex justify-between gap-3 px-2 py-4">
-                    <button className="text-[17px] font-bold w-full bg-secondary-500 rounded-full text-white py-4  flex justify-center items-center " onClick={handleClick}>
+                    <button
+                      className="text-[17px] font-bold w-full bg-secondary-500 rounded-full text-white py-4  flex justify-center items-center "
+                      onClick={handleClick}
+                    >
                       Message
                     </button>
 
@@ -298,7 +257,7 @@ const Profile = () => {
                     </p>
                     <div className="flex flex-col lg:flex-row w-full justify-between mt-4 gap-2 lg:">
                       <div className="flex gap-4 ">
-                        {disable ? (
+                        {/* {disable ? (
                           <button
                             onClick={unfollowHandle}
                             className="text-[15px] bg-primary-500 px-4 rounded-full text-white py-[10px] flex justify-center items-center gap-1"
@@ -322,8 +281,10 @@ const Profile = () => {
                             </span>
                             Sent Interested
                           </button>
-                        )}
-                        <FixedMet partnerUser={user} />
+                        )} */}
+                        <FixedMet partnerUserID={user?._id} />
+
+                        <RelationSts partnerUser={user} />
                       </div>
                       <div className="flex gap-4">
                         <button className="bg-[#A4B0C1] px-[15px] py-[10px] rounded-full">
@@ -361,7 +322,7 @@ const Profile = () => {
                       />
                       <div className="text-center text-[18px]">
                         <p>HEIGHT:</p>
-                        <p>{height}</p>
+                        <p>{(height)}</p>
                       </div>
                     </div>
                     <div className="p-3 bg-white rounded-2xl">
@@ -372,7 +333,7 @@ const Profile = () => {
                       />
                       <div className="text-center text-[18px]">
                         <p>CITY:</p>
-                        <p>{city}</p>
+                        <p>{state}</p>
                       </div>
                     </div>
                     <div className="p-3 bg-white rounded-2xl">
@@ -404,11 +365,7 @@ const Profile = () => {
                     <div className="">
                       <Info title="Gender" value={gender} />
                       <Info title="Height" value={height} />
-                      <Info
-                        title="Marital Status
-"
-                        value={marital_status}
-                      />
+                      <Info title="Marital Status" value={marital_status} />
                       <Info title="Profile" value={profile} />
                       <Info title="Religion" value={religion} />
                       <Info title="State" value={state} />
@@ -463,35 +420,22 @@ const Profile = () => {
                   </div>
                 </div>
 
-                <BorderBottom />
-                <Title title="Hobbies" />
-               
+
                 {/* Hobbies Section */}
-                {/* {
-                  interests?  <div className="flex gap-3 flex-wrap">
-                  {interests?.map((interest, index) => (
-                    <HBox key={index} value={interest} />
-                  ))}
-                </div>: <></>
-                } */}
-                
+                {
+                  interests ?
+                    <>
+                      <BorderBottom />
+                      <Title title="Hobbies" />
+                      <div className="flex gap-3 flex-wrap">
+                        {interests?.map((interest, index) => (
+                          <HBox key={index} value={interest} />
+                        ))}
+                      </div></> : <></>
+                }
 
                 <BorderBottom />
-                <Title title="Social Media" />
-                <div className="flex gap-2">
-                  <div className="bg-white p-[12px] rounded-full border border-[#6b7b958c]">
-                    <img src={facebook} className="text-2xl" />
-                  </div>
-                  <div className="bg-white p-[12px] rounded-full border border-[#6b7b958c]">
-                    <img src={linkedin} className="text-2xl" />
-                  </div>
-                  <div className="bg-white p-[12px] rounded-full border border-[#6b7b958c]">
-                    <img src={insta} className="text-2xl" />
-                  </div>
-                  <div className="bg-white p-[12px] rounded-full border border-[#6b7b958c]">
-                    <img src={twitter} className="text-2xl" />
-                  </div>
-                </div>
+                
 
                 {/* info div */}
               </div>
@@ -522,6 +466,8 @@ export const Info = ({ title, value }) => {
     </div>
   );
 };
+
+
 const HBox = ({ value }) => {
   return (
     <div className="bg-white py-3 px-4 rounded-full text-[#536279] text-base ">
@@ -529,3 +475,21 @@ const HBox = ({ value }) => {
     </div>
   );
 };
+
+const GalleryImg = ({img}) => {
+  return(
+    <Link to={img} className="relative group cursor-pointer mb-2 w-[145px] lg:w-full">
+      <img
+        className="w-[145px] h-[133px] rounded-2xl object-cover  "
+        src={img}
+        alt=""
+      />
+      <div className="absolute center-div bg-black rounded-2xl duration-300 bg-opacity-50 h-0 w-0 group-hover:h-full group-hover:w-full ">
+        <div className="w-full h-full flex items-center justify-center mb-4">
+          <PiMagnifyingGlassPlusThin className="text-5xl text-primary-50" />
+        </div>
+      </div>
+    </Link>
+  )
+}
+

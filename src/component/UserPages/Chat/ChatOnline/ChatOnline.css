@@ -25,12 +25,29 @@
     border-radius: 50%;
     background-color: limegreen;
     position: absolute;
-    top: 2px;
-    right: 2px;
+    top: 4px;
+    right: 4px;
   }
   
   @media screen and (max-width: 768px) {
     .chatOnlineName {
       display: none;
     }
+  }
+
+  .custom-scrollbar {
+    scrollbar-width: thin;
+  }
+
+  .custom-scrollbar {
+    overflow-x: scroll;
+   
+
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #d1d1d1; /* Color of the thumb */
+    border-radius: 8px; /* Rounded corners */
+    border: 1px solid #ffffff; /* Border around the thumb */
+    height: 12px; /* Set the height of the thumb */
+    width: 12px; /* Set the width of the thumb */
   }

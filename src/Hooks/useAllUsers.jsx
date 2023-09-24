@@ -4,7 +4,7 @@ const useAllUsers = () => {
     const { isLoading, data} = useQuery(
         { queryKey: ['allUser' ], 
         queryFn: async () =>{
-            const res = await fetch(`https://soulmates-server.vercel.app/allUser`)
+            const res = await fetch(`http://localhost:5000/allUser`)
             return res.json();
         },
      })

@@ -6,17 +6,22 @@ import Loading from "../../../../../Shared/Loading";
 
 const BookService = () => {
     const {user}=useContext(AuthContext)
-    console.log(user?.email)
-    const [datas, setDatas]=useState([])
+    const [datas, setDatas]=useState([]);
+    
+    console.log(datas);
     const [loading, setLoading] = useState(true);
+    console.log(user?.email)
+    console.log(datas)
+    
+    
     useEffect(()=>{
-        fetch(`https://soulmates-server.vercel.app/singleBookedService/${user?.email}`)
+        fetch(`http://localhost:5000/singleBookedService/${user?.email}`)
         .then(res=>res.json())
         .then(data=>{
             setLoading(false)
             setDatas(data)
         })
-    },[])
+    },[user?.email])
     console.log(datas)
 
     if (loading) {

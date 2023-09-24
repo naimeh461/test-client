@@ -9,6 +9,7 @@ const SingleUserCard = ({ filteredUser }) => {
   const [userInfo, refetch] = useMyData();
   const navigate = useNavigate();
 
+
   const {
     profileImage,
     name,
@@ -22,10 +23,10 @@ const SingleUserCard = ({ filteredUser }) => {
     marital_status,
   } = filteredUser;
 
-  const handleClick = () => {
+  const userPermission = () => {
     axios
       .put(
-        `https://soulmates-server.vercel.app/profileVisit?user=${userInfo?.email}`
+        `http://localhost:5000/profileVisit?user=${userInfo?.email}`
       )
       .then((response) => {
         if (response.data.modifiedCount > 0) {
@@ -49,6 +50,53 @@ const SingleUserCard = ({ filteredUser }) => {
               });
             }
           }
+        }
+      });
+  };
+
+  const putUserHandle = (visitUser) => {
+    axios
+      .get(
+        `http://localhost:5000/disableAddVstUser/${userInfo._id}/${_id}`
+      )
+      .then((response) => {
+        if (!response.data) {
+          axios
+            .put(
+              `http://localhost:5000/addVstUser/${userInfo._id}`,
+              visitUser
+            )
+            .then((response) => {
+              if (response.data.modifiedCount > 0) {
+                userPermission();
+              }
+            });
+        }
+      });
+  };
+
+  const handleVisitPermit = () => {
+    const visitUser = {
+      favId: _id,
+      vstUser: name,
+    };
+
+    axios
+      .get(`http://localhost:5000/showVstUser/${userInfo._id}`)
+      .then((response) => {
+        if (response.data.userId) {
+          putUserHandle(visitUser);
+        } else {
+          axios
+            .post(
+              `http://localhost:5000/pstVstUser/${userInfo._id}`,
+              visitUser
+            )
+            .then((response) => {
+              if (response.data.insertedId) {
+                userPermission();
+              }
+            });
         }
       });
   };
@@ -117,7 +165,7 @@ const SingleUserCard = ({ filteredUser }) => {
         </button>
         <Link
           to={`/profile/${_id}`}
-          onClick={handleClick}
+          onClick={handleVisitPermit}
           className="md:text-[20px]  text-sm font-bold w-full bg-primary-500 rounded-full text-white py-[13px]  flex justify-center items-center "
         >
           View Profile

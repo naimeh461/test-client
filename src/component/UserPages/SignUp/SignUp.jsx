@@ -7,9 +7,7 @@ import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-// import intlTelInput from 'intl-tel-input';
 
-// const Image_Hosting_Token = import.meta.env.VITE_Image_Upload_Token;
 const SignUp = () => {
   const navigate = useNavigate("/");
   const [Error, setError] = useState("");
@@ -47,7 +45,7 @@ const SignUp = () => {
               profile_complete: 10,
               profileVisit: 50,
             };
-            fetch("https://soulmates-server.vercel.app/alluser", {
+            fetch("http://localhost:5000/alluser", {
               method: "POST",
               headers: {
                 "content-type": "application/json",

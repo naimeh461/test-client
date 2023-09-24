@@ -1,12 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../../Shared/Header/Header';
 
-import img1 from '../../../assets/galleryPhotos/1.png'
-import img2 from '../../../assets/galleryPhotos/2.png'
-import img3 from '../../../assets/galleryPhotos/3.png'
-import img4 from '../../../assets/galleryPhotos/4.png'
-import img5 from '../../../assets/galleryPhotos/5.png'
 import { PhotoContainer, PhotoGallerySection } from '../Home/gellary/Gallery';
+import { useParams } from 'react-router-dom';
 
 const imgs = [
   'https://images.unsplash.com/photo-1634729108630-543394c7c2de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80',
@@ -19,18 +15,31 @@ const imgs = [
 
 ]
 
-
 const GalleryPage = () => {
+  const params = useParams();
+  const [happyStories, setHappyStories] = useState([]);
+  console.log(happyStories)
+  useEffect(() => {
+    fetch(`http://localhost:5000/reviews`)
+      .then(res => res.json())
+      .then(data => setHappyStories(data));
+  }, [params.id])
+  const getName = (coupleName) => {
+    const name = coupleName.split('and')
+    return name
+  }
+
   return (
     <div className='max-w-7xl mx-auto px-2'>
-      <Header title="Our Sweet Gallery" text='Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur incidunt iure adipisci harum minima excepturi.' />
+      <Header title="Our Sweet Couples Gallery" text=' Discover the beautiful love stories of couples who found their perfect match through our platform. Join us in celebrating their journey to happiness and everlasting love.' />
+
       <div className="">
         <PhotoGallerySection />
 
         {/* dynamic data goes here */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-[12px] mb-4">
           {
-            imgs.map((img, index) => <PhotoContainer key={index} img={img} imgStyle='w-full h-full object-cover' />)
+            happyStories.map((data, index) => <PhotoContainer maleName={getName(data.coupleName)[0]} femaleName={getName(data.coupleName)[1]} key={index} img={data.imageURL} imgStyle='w-full h-full object-cover' />)
           }
         </div>
       </div>

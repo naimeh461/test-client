@@ -18,7 +18,7 @@ const Userinfo3 = () => {
     const [drinkHabit, setDrinkHabit] = useState({});
     const onSubmit = () => {
         const userinfo = { religionValue: religiousValue?.religiousValue, foodHabit: foodHabit?.FoodOptions, smokingHabit: smokingHabit?.smokingHabit, drinkHabit: drinkHabit?.drinkHabit , profile_complete:60 , id: userInfo._id}
-        fetch('https://soulmates-server.vercel.app/update3', {
+        fetch('http://localhost:5000/update3', {
             method: "PUT",
             headers: {
               "content-type" : "application/json"

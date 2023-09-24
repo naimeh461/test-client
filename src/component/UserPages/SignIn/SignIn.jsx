@@ -6,11 +6,16 @@ import Swal from 'sweetalert2';
 import logo from "../../../assets/logo/logo.png"
 import { Helmet } from 'react-helmet';
 import { useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
 const SignIn = () => {
   const { signIn } = useContext(AuthContext);
   const [Error, setError] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
   const navigate = useNavigate()
   const handleSignIn = (event) => {
     event.preventDefault();
@@ -31,9 +36,9 @@ const SignIn = () => {
           navigate('/myProfile');
         }
       })
-    .catch((error) =>
-      setError(error.message),
-    );
+      .catch((error) =>
+        setError(error.message),
+      );
 
   }
   return (
@@ -46,8 +51,8 @@ const SignIn = () => {
       </Helmet>
 
       <figure className="lg:w-[50%] ">
-          <img className="xl:object-cover hidden lg:flex lg:-ml-24 lg:h-[750px]  " src={img} alt="" />
-        </figure>
+        <img className="xl:object-cover hidden lg:flex lg:-ml-24 lg:h-[750px]  " src={img} alt="" />
+      </figure>
       <div className="card-body">
         <div className='text-center mb-5'>
           <img className='w-52 mx-auto mt-10' src={logo} alt="" />
@@ -68,7 +73,12 @@ const SignIn = () => {
           {/* password field*/}
           <div>
             <div className="relative z-0">
-              <input name='password' type="password" id="standard_success" aria-describedby="standard_success_help" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-[#a2a2a2] appearance-none  dark:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-[#a2a2a2] peer" placeholder=" " required />
+              <input name='password'  type={passwordVisible ? 'text' : 'password'} id="standard_success" aria-describedby="standard_success_help" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-[#a2a2a2] appearance-none  dark:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-[#a2a2a2] peer" placeholder=" " required />
+              <span className="absolute right-3 transform -translate-y-1/2 top-1/2 cursor-pointer">
+                <i
+                  onClick={togglePasswordVisibility}
+                >{passwordVisible ? <FaEyeSlash /> : <FaEye />}</i>
+              </span>
               <label htmlFor="standard_success" className="absolute text-sm text-[#a2a2a2] dark:text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
             </div>
             {/* This paragraph is for input validation. if user inter invalid email or password this paragraph will be shown and text color will be red */}
@@ -76,14 +86,14 @@ const SignIn = () => {
           </div>
           <p className='text-sm text-[#a2a2a2] text-right'><Link className='red-text'>Forgot password?</Link> </p>
           <button className='btn red-primary text-gray-300 w-[40%] md:w-[25%] rounded-full mx-auto hover:bg-[#b15245]'>SignIn</button>
-         
+
         </form>
 
-        
+
         {Error && <p className="text-red-600 text-center">{Error}</p>}
         <p className='text-center text-[#a2a2a2] '>New to soulmate? <Link className='red-text' to="/signup">Create an account</Link></p>
       </div>
-      
+
     </div>
   );
 };

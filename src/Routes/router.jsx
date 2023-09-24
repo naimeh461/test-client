@@ -19,7 +19,7 @@ import UserProfile from "../component/UserPages/UserProfile/UserProfile";
 import Messenger from "../component/UserPages/Chat/Messenger/Messenger";
 import PaymentPage from "../payments/PaymentPage/PaymentPage";
 import SSl from "../payments/SSLcommerz/SSl";
-import SingleHappyStory from "../component/UserPages/Home/HappyStory/SingleHappyStory";
+import AllHappyStory from "../component/UserPages/Home/HappyStory/AllHappyStory";
 import UserPrivateRoute from "./UserPrivateRoute";
 import AddBlog from "../component/UserPages/Blog/AddBlog";
 import AllUser from "../component/UserPages/AllUser/AllUser";
@@ -43,9 +43,10 @@ import UserDetails from "../component/AuthPages/Dashboard/Support/UserDetails/Us
 import BookService from "../component/AuthPages/Dashboard/Support/BookService/BookService";
 import Dashboard from "../component/AuthPages/Dashboard/Shared/Dashboard";
 import GalleryPage from "../component/UserPages/GalleryPage/GalleryPage";
-
-
-
+import AdminRoute from "./AdminRoute";
+import SupportRoute from "./SupportRoute";
+import PaymentHistory from "../payments/PaymentHistory/PaymentHistory";
+import TermCondition from "../component/UserPages/SignUp/TermCondition";
 
 const router = createBrowserRouter([
   {
@@ -63,7 +64,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/plans",
-        element: <Plans></Plans>,
+        element: <Plans/>,
       },
       {
         path: "/about",
@@ -94,7 +95,12 @@ const router = createBrowserRouter([
       {
         path: "/blogDetails/:id",
         element: <BlogDetails></BlogDetails>,
-        loader: ({ params }) => fetch(`https://soulmates-server.vercel.app/blogsDetails/${params.id}`)
+
+      },
+      {
+        path: "/reviews",
+        element: <AllHappyStory></AllHappyStory>,
+        
 
       },
       {
@@ -105,6 +111,10 @@ const router = createBrowserRouter([
       {
         path: "/paymentOne",
         element: <PaymentCard></PaymentCard>,
+      },
+      {
+        path: '/paymentHistory',
+        element: <PaymentHistory />
       },
       
       {
@@ -117,7 +127,9 @@ const router = createBrowserRouter([
       },
       {
         path: "/payment",
-        element: <PaymentPage />,
+
+        element:<UserPrivateRoute> <PaymentPage/></UserPrivateRoute>,
+
         children: [
           {
             path: '/payment/stripe',
@@ -130,10 +142,7 @@ const router = createBrowserRouter([
         ]
       },
       
-      {
-        path: "/allcouple/:id",
-        element: <SingleHappyStory />,
-      },
+    
       {
         path: "/message",
         element: <UserPrivateRoute><Messenger></Messenger></UserPrivateRoute>
@@ -150,13 +159,18 @@ const router = createBrowserRouter([
         path: "/service",
         element: <Service></Service>,
       },
-   
+      
+      {
+        path:"termCondition",
+        element:<TermCondition/>
+      },
       {
         path: "hotel/:id",
         element: <ServiceCard></ServiceCard>,
-        loader: ({ params }) => fetch(`https://soulmates-server.vercel.app/service/${params.id}`),
+        loader: ({ params }) => fetch(`http://localhost:5000/service/${params.id}`),
 
       },
+   
       {
         path: "/",
         children: [
@@ -209,11 +223,11 @@ const router = createBrowserRouter([
       },
       {
         path: "manageUser",
-        element: <MangeUsersX></MangeUsersX>,
+        element: <AdminRoute><MangeUsersX></MangeUsersX></AdminRoute>,
       },
       {
         path: "allUser",
-        element: <AllUserD></AllUserD>,
+        element: <AdminRoute><AllUserD></AllUserD></AdminRoute>,
       },
       {
         path: "bookService",
@@ -221,20 +235,21 @@ const router = createBrowserRouter([
       },
       {
         path: "addService",
-        element: <AddService />,
+        element: <SupportRoute><AddService /></SupportRoute>,
       },
       {
         path: "verifyUser",
-        element: <VerifyUser />,
+        element: <SupportRoute><VerifyUser /></SupportRoute>,
       },
       {
         path: "addBlog",
-        element: <AddBlog />
+        element: <SupportRoute><AddBlog /></SupportRoute>
       },
       {
         path:"userDetails",
         element:<UserDetails></UserDetails>
       }
+      
     ]
   },
   {

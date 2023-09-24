@@ -14,7 +14,7 @@ const Image_Hosting_Token = import.meta.env.VITE_Image_Upload_Token;
 
 const AuthoritySignUp = () => {
   const navigate = useNavigate("/");
-  const [authority, setAuthority] = useState('');
+  const [authority, setAuthority] = useState(null);
   console.log(authority);
   const [Error, setError] = useState("");
   const { createUser, updateUserProfile } = useContext(AuthContext);
@@ -65,7 +65,7 @@ const AuthoritySignUp = () => {
                   status: "pending"
                 };
                 console.log(saveUser);
-                fetch("https://soulmates-server.vercel.app/authority", {
+                fetch("http://localhost:5000/authority", {
                   method: "POST",
                   headers: {
                     "content-type": "application/json",
@@ -115,8 +115,8 @@ const AuthoritySignUp = () => {
           Welcome to SoulMate | Authority
         </p>
         {/* authority button start*/}
-        <div className="flex justify-center gap-4">
-          <div className="flex gap-5 mt-3">
+        <div className="flex justify-center gap-4 ">
+          <div className="flex gap-5 mt-7">
             <label className="cursor-pointer">
               <input
                 type="radio"
@@ -125,11 +125,11 @@ const AuthoritySignUp = () => {
                 onChange={() => setAuthority("admin")}
                 required
               />
-              <div className=" max-w-xl rounded-3xl bg-gray-100 p-2 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-blue-800  peer-checked:ring-blue-800 peer-checked:ring-offset-2">
+              <div className=" max-w-xl rounded-3xl bg-gray-200 p-2 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-blue-800  peer-checked:ring-blue-800 peer-checked:ring-offset-2">
                 <div className="flex flex-col ">
-                  <div className="flex  gap-1 items-center justify-center px-2">
+                  <div className="flex  gap-1 items-center justify-center px-7">
                     <p>
-                      <span value="Gender" className="sm:text-lg p-4">
+                      <span value="Gender" className="sm:text-lg p-4 ">
                         Admin
                       </span>
                     </p>
@@ -138,7 +138,7 @@ const AuthoritySignUp = () => {
               </div>
             </label>
           </div>
-          <div className="flex gap-5 mt-3">
+          <div className="flex gap-5 mt-7">
             <label className="cursor-pointer">
               <input
                 type="radio"
@@ -147,9 +147,9 @@ const AuthoritySignUp = () => {
                 onChange={() => setAuthority("support")}
                 required
               />
-              <div className=" max-w-xl rounded-3xl bg-gray-100 p-2 text-gray-600 ring-2 ring-transparent transition-all hover:shadow  peer-checked:text-blue-800  peer-checked:ring-blue-800 peer-checked:ring-offset-2">
+              <div className=" max-w-xl rounded-3xl bg-gray-200 p-2 text-gray-600 ring-2 ring-transparent transition-all hover:shadow  peer-checked:text-blue-800  peer-checked:ring-blue-800 peer-checked:ring-offset-2">
                 <div className="flex flex-col ">
-                  <div className="flex  gap-1 items-center justify-center px-2 ">
+                  <div className="flex  gap-1 items-center justify-center px-7 ">
                     <p>
                       <span className="sm:text-lg p-4">Support</span>
                     </p>
@@ -193,7 +193,7 @@ const AuthoritySignUp = () => {
               <input
                 name="imgurl"
                 {...register("image", { required: true })}
-               type="file" className="file-input file-input-bordered file-input-[#080373] w-full " 
+                type="file" className="file-input file-input-bordered file-input-[#080373] w-full "
                 placeholder=""
               />
               {errors.imgurl && (
@@ -288,7 +288,10 @@ const AuthoritySignUp = () => {
               <br />
             </p>
           </div>
-          <button className="btn bg-[#080373] text-white  md:w-[25%] rounded-full mx-auto hover:text-black">
+          <button
+            className="btn bg-[#080373] text-white md:w-[25%] rounded-full mx-auto hover:text-black"
+            disabled={authority === null}
+          >
             SignUp
           </button>
         </form>

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const LeftCard = () => {
   const [popular, setPopular] = useState([]);
   useEffect(() => {
-    fetch(`https://soulmates-server.vercel.app/PopularBlog`)
+    fetch(`http://localhost:5000/PopularBlog`)
       .then(res => res.json())
       .then(data => {
         setPopular(data)
@@ -15,12 +15,13 @@ const LeftCard = () => {
       })
   }, [])
 
+  console.log(popular)
   return (
     <div>
       <h1 className="text-3xl font-serif font-medium my-4">Popular Blogs</h1>
       <div className="h-[600px] w-full overflow-hidden overflow-y-auto hide-scrollbar">
         {
-          popular?.map(pData => <>
+          popular?.map(pData => 
 
             <div className="border-2 p-2 mb-3 grid grid-cols-2" key={pData._id}>
 
@@ -41,7 +42,7 @@ const LeftCard = () => {
                 </div>
               </div>
             </div>
-          </>)
+         )
         }
       </div>
     </div>

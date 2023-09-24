@@ -24,7 +24,7 @@ const PaymentCard = () => {
       plan: decodedData.plan,
       price: decodedData.price,
     };
-    fetch("https://soulmates-server.vercel.app/order", {
+    fetch("http://localhost:5000/order", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(data),

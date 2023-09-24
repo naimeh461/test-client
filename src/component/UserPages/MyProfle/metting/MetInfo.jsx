@@ -1,37 +1,14 @@
 import axios from "axios";
-import { formatMetDate } from "../../../../utilities/utilities";
+import { formatMetDate, updateStatus } from "../../../../utilities/utilities";
+import { Link } from "react-router-dom";
 
 const MetInfo = ({ infoData, actionType, refetch, user }) => {
   const acceptHandle = (delId) => {
-    const delMEt = {
-      status: "accept",
-    };
-    axios
-      .put(
-        `https://soulmates-server.vercel.app/acceptMet/${delId}`,
-        delMEt
-      )
-      .then((response) => {
-        if (response.data.modifiedCount > 0) {
-          refetch();
-        }
-      });
+    updateStatus("acceptMet", delId, "accept", refetch);
   };
 
   const deleteHandle = (delId) => {
-    const delMEt = {
-      status: "reject",
-    };
-    axios
-      .put(
-        `https://soulmates-server.vercel.app/deleteMet/${delId}`,
-        delMEt
-      )
-      .then((response) => {
-        if (response.data.modifiedCount > 0) {
-          refetch();
-        }
-      });
+    updateStatus("deleteMet", delId, "reject", refetch);
   };
   const reviewHandle = (delId) => {
     const delMEt = {
@@ -39,10 +16,7 @@ const MetInfo = ({ infoData, actionType, refetch, user }) => {
       status: "proposed",
     };
     axios
-      .put(
-        `https://soulmates-server.vercel.app/setProposal/${delId}`,
-        delMEt
-      )
+      .put(`http://localhost:5000/setProposal/${delId}`, delMEt)
       .then((response) => {
         if (response.data.modifiedCount > 0) {
           refetch();
@@ -55,23 +29,31 @@ const MetInfo = ({ infoData, actionType, refetch, user }) => {
       {infoData?.length > 0 ? (
         <>
           {infoData?.map((req) => (
-            <div
-              className="flex items-center space-x-4 p-4 border-b border-gray-300"
-              key={req._id}
-            >
-              <div className="flex-shrink-0">
-                <img
-                  src={req.profileImage}
-                  className="h-10 w-10 rounded-full"
-                />
-              </div>
-              <div className="flex-grow">
-                <p className="text-sm font-medium text-gray-800">{req.name}</p>
-                <p className="text-sm text-gray-600">
-                  {formatMetDate(req.metDate)}
-                </p>
-              </div>
-              <div className="flex-shrink-0 space-x-2">
+            <div className="w-full  p-4 border-b border-gray-300" key={req._id}>
+              <Link to={`/profile/${req._id}`}>
+                <div className="flex items-center gap-5">
+                  <div className="flex-shrink-0">
+                    <img
+                      src={req.profileImage}
+                      className="h-16 w-16 rounded-full"
+                    />
+                  </div>
+                  <div className="flex-grow">
+                    <h2 className="text-lg font-medium text-gray-800">
+                      {req.title}
+                    </h2>
+                    <h1 className="text-xl font-medium text-gray-800">
+                      {req.name}
+                    </h1>
+                    <p className="text-sm font-medium text-gray-800">
+                      {formatMetDate(req.metDate)}
+                    </p>
+                    <p className="text-sm text-gray-600">{req.location}</p>
+                  </div>
+                </div>
+              </Link>
+              <div className=" w-full text-lg my-2">{req.descript}</div>
+              <div className="flex-shrink-0 space-x-2 text-right">
                 {actionType === "accept" && (
                   <>
                     <div className="grid grid-rows-2 gap-2">

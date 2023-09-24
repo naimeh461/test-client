@@ -11,8 +11,8 @@ const MetForUser = () => {
       </div>
       <hr className="border border-[#C3CAD5]" />
       <div className="p-4">
-        <div className="flex gap-3 flex-wrap">
-          <div className="bg-[#F0F2F5] py-3 px-4 rounded-2xl text-[#536279] text-base">
+        <div className="flex gap-3 flex-wrap overflow-hidden">
+          <div className="bg-[#F0F2F5] w-full overflow-hidden py-3 px-4 rounded-2xl text-[#536279] text-base">
             <ShowMet partnerUser={userInfo} />
           </div>
         </div>

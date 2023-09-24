@@ -27,7 +27,7 @@ const AddBlog = () => {
         const finalData = { title: blogData.title, details: blogData.details, type: blogData.type, image: res.data.data.url, react: 0, date: startDate, email : user.email}
         console.log({res, finalData})
         if(res.data.success){
-          axios.post('https://soulmates-server.vercel.app/blogs', finalData)
+          axios.post('http://localhost:5000/blogs', finalData)
             .then(res => {
               console.log(res)
               if (res.data.insertedId){
@@ -77,7 +77,7 @@ const AddBlog = () => {
             {/* <input type="text" id="first_name" className="text-[18px] font-medium font-lato rounded-full py-5 pl-7 bg-gray-50 border border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" /> */}
             <select defaultValue={'Advice'} {...register('type', {required: true})} id="blog_category" className="text-[18px] font-medium font-lato rounded-full py-5 pl-7 pr-7 bg-gray-50 border border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block w-full ">
               <option selected>Choose a category</option>
-              <option Devalue="advice">Advice</option>
+              <option value="advice">Advice</option>
               <option value="engagement">Engagement</option>
               <option value="dates">Dates</option>
               <option value="wedding">Wedding</option>

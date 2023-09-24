@@ -6,9 +6,10 @@ import { Link } from 'react-router-dom';
 
 const LatestBlog = () => {
     const [latest, setLatest] = useState([]);
+    console.log(latest);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
-        fetch('https://soulmates-server.vercel.app/blogsLatest')
+        fetch('http://localhost:5000/blogsLatest')
             .then(res => res.json())
             .then(data => {
                 setLatest(data);
@@ -22,8 +23,8 @@ const LatestBlog = () => {
         <div className='mt-10'>
             <h1 className="text-3xl font-serif font-medium my-4">Latest Blogs</h1>
             <div className="">
-                {
-                    latest?.map(latestData => <>
+                {latest && Array.isArray(latest) && latest.length > 0 ? (
+                    latest.map((latestData) => (
                         <div className="border-2 p-2 mb-3 grid grid-cols-2" key={latestData._id}>
                             <div className="">
                                 <img className="h-32 w-[300px] object-cover object-center mt-3" src={latestData.image} alt="" />
@@ -40,8 +41,10 @@ const LatestBlog = () => {
                                 </div>
                             </div>
                         </div>
-                    </>)
-                }
+                    ))
+                ) : (
+                    <p>No latest blog data available.</p>
+                )}
             </div>
         </div>
     );

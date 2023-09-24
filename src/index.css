@@ -94,3 +94,15 @@
 .link-shadow {
     box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
 }
+
+
+.calendarElement {
+  position: absolute;
+  border: 1px solid #ccc;
+  z-index: 999;
+}
+/* for profile gallery */
+.lg-react-element{
+  @apply flex lg:flex-col gap-2 
+
+}

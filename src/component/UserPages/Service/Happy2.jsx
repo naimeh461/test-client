@@ -26,7 +26,7 @@ const Happy2 = () => {
         const finalData = { coupleName: reviewData.user + " and " + reviewData.patner, review: reviewData.details, imageURL: res.data.data.url, location: reviewData.location, date: startDate }
         console.log({ res, finalData })
         if (res.data.success) {
-          axios.post('https://soulmates-server.vercel.app/reviews', finalData)
+          axios.post('http://localhost:5000/reviews', finalData)
             .then(res => {
               console.log(res)
               if (res.data.insertedId) {
@@ -55,9 +55,9 @@ const Happy2 = () => {
   }
 
   return (
-    <div className='bg-gray-50'>
-      <form onSubmit={handleSubmit(onSubmit)} className='py-20' action="">
-        <div className='space-y-6 px-10 bg-white  py-10 w-[700px] mx-auto rounded-[30px]'>
+    <div className=''>
+      <form onSubmit={handleSubmit(onSubmit)} className='py-10 ' action="">
+        <div className='space-y-6 px-10 bg-white  py-10 w-[700px] mx-auto rounded-[30px] border-blue-500 border-2 dark:bg-gray-400'>
           {/* input field */}
         <div>
           <label htmlFor="patnerName" className="text-[20px] font-lato  block mb-2 font-medium text-gray-900 ">Your Name</label>

@@ -14,7 +14,7 @@ const Contact = () => {
 
   const onSubmit = (contactData) => {
     const finalData = {name: contactData.name, email: contactData.email, subject: contactData.subject, status: 'pending'}
-    axios.post('https://soulmates-server.vercel.app/contact', finalData)
+    axios.post('http://localhost:5000/contact', finalData)
       .then(res => {
         console.log(res.data.insertedId)
         if (res.data.insertedId){
@@ -32,14 +32,14 @@ const Contact = () => {
   }
   
   return (
-    <div className=" max-w-7xl mx-auto mb-8 w-[80%]">
-      <div className="text-center mb-12">
+    <div className=" max-w-7xl mx-auto mb-8 w-[80%] dark:bg-gray-800">
+      <div className="text-center mb-12 dark:bg-gray-800">
         <p className="text-[48px] font-alice text-[#272932] dark:text-white">Contact us</p>
         <p className="text-[18px] font-lato text-[#3E4A5B] dark:text-gray-200">We're here to help you on your journey towards finding a lifelong partner. At <span className="text-red-500 ">'Soulmate Matrimony'</span> , <br /> we value your feedback, questions, and suggestions. </p>
       </div>
       
       {/* form section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 dark:bg-gray-800">
         <form onSubmit={handleSubmit(onSubmit)} className='space-y-6 bg-white  mx-auto rounded-[30px] border-[#AFB2B5] border p-12 w-full dark:bg-gray-400' action="" >
           <p className='font-alice text-4xl'>Let’s Connect</p>
           {/* input field */}

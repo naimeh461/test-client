@@ -1,15 +1,18 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../../Provider/AuthProvider";
+import { data } from "autoprefixer";
 
 const UserDetails = () => {
   const { user } = useContext(AuthContext);
   const [datas, setDatas] = useState([]);
-  useEffect(() => {
-    fetch(`https://soulmates-server.vercel.app/userStats/${user?.email}`)
-      .then((res) => res.json())
-      .then((data) => setDatas(data));
-  }, []);
 
+  // useEffect(() => {
+  //   fetch(`http://localhost:5000/userStats/${user?.email}`)
+  //     .then((res) => res.json())
+  //     .then((data) => console.log(data));
+  // }, []);
+
+  
   return (
     <div>
       <div>

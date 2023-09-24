@@ -16,7 +16,7 @@ const Home = () => {
       <meta charSet="utf-8" />
       <title>Soulmate | Home</title>
     </Helmet>
-    <div className=" overflow-x-hidden md:overflow-visible lg:overflow-x-hidden">
+    <div className=" overflow-x-hidden md:overflow-visible lg:overflow-x-hidden dark:bg-gray-800">
     <HomeBanner></HomeBanner>
     <HowItWork/>
     <WhyChooseUs></WhyChooseUs>

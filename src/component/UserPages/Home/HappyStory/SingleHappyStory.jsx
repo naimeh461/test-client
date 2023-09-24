@@ -1,33 +1,31 @@
-import { useEffect, useState } from 'react';
 
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLoaderData, useParams } from 'react-router-dom';
 
 
 const SingleHappyStory = () => {
-    const params = useParams();
-    const [happyStories, setHappyStories] = useState([]);
-    useEffect(() => {
-        fetch(`https://soulmates-server.vercel.app/allcouple/${params.id}`)
-            .then(res => res.json())
-            .then(data => setHappyStories(data));
-    }, [params.id])
+  const params = useParams();
+  const [happyStories, setHappyStories] = useState([]);
+  useEffect(() => {
+      fetch(`http://localhost:5000/reviews/${params.id}`)
+          .then(res => res.json())
+          .then(data => setHappyStories(data));
+  }, [params.id])
 
-    const { name, img, about_marriage } = happyStories;
+  const { coupleName, imageURL,review ,date } = happyStories;
 
     return (
-        <div >
-            <div className="card card-side bg-base-100 shadow-2xl p-4 ">
-                <figure><img src={img} alt="Movie" /></figure>
-                <div className="card-body">
-
-                    <div className="card-actions justify-end">
-
-                    </div>
-                </div>
-            </div>
-
-
+      <div className="card lg:card-side bg-base-100 shadow-xl  dark:bg-gray-800">
+      <figure><img src={imageURL} alt="Album"/></figure>
+      <div className="card-body flex flex-col justify-center items-center text-center dark:text-white">
+        <h2 className="card-title">{coupleName}</h2>
+        <p>{review}</p>
+        <div className="card-actions justify-end">
+          {date}
         </div>
+      </div>
+    </div>
+    
     );
 };
 

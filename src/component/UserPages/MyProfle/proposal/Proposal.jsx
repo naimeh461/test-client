@@ -14,16 +14,14 @@ const Proposal = () => {
   const [disable, setDisable] = useState(false);
   const { refetchProposal, proposal } = useProposalInfo(userInfo._id);
 
-  console.log(proposal);
-
   const { refetch: refetchAccept, data: accept = [] } = useCustomQuery(
     ["acceptt", userInfo._id],
-    `https://soulmates-server.vercel.app/getAccept/${userInfo._id}`
+    `http://localhost:5000/getAccept/${userInfo._id}`
   );
 
   const { refetch: refetchReject, data: reject = [] } = useCustomQuery(
     ["reject", userInfo._id],
-    `https://soulmates-server.vercel.app/getReject/${userInfo._id}`
+    `http://localhost:5000/getReject/${userInfo._id}`
   );
 
   const refetchFunc = () => {

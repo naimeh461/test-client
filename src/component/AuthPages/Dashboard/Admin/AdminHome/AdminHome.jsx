@@ -6,16 +6,6 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 
 
 const AdminHome = () => {
-  const [datas, setDatas] = useState([]);
-  useEffect(() => {
-    fetch("https://soulmates-server.vercel.app/adminStats")
-
-      .then((res) => res.json())
-      .then((data) => setDatas(data));
-  }, []);
-  const doller = datas.revenue / 100;
-  console.log(datas);
-
   const data = [
     {
       name: 'February',
@@ -60,6 +50,18 @@ const AdminHome = () => {
       amt: 2100,
     },
   ];
+  
+  const [datas, setDatas] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:5000/adminStats")
+
+      .then((res) => res.json())
+      .then((data) => setDatas(data));
+  }, [data._id]);
+  const doller = datas.revenue / 100;
+  console.log(datas);
+
+  
   
 
   return (

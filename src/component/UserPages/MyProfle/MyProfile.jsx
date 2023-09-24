@@ -10,6 +10,8 @@ const MyProfile = () => {
 
   const [userInfo] = useMyData();
   const {  profile_complete } = userInfo
+  
+  console.log(userInfo , profile_complete)
 
   const accountFor = [
     { id: 1, name: 'MySelf' },
@@ -68,7 +70,7 @@ const MyProfile = () => {
 
 
   return (
-    <div className="w-[80%] mx-auto m-32">
+    <div className=" mx-auto">
       {showModal ? (
         <>
           <div className="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-hidden md:inset-0 h-screen max-h-screen flex justify-center items-center bg-opacity-30 backdrop-blur-lg backdrop-filter bg-gray-300">

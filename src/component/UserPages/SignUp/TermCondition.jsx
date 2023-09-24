@@ -3,20 +3,14 @@
 const TermCondition = () => {
     return (
         <div className="w-[80%] mx-auto my-10">
-            <h6 className="text-xl"> Terms and Conditions Preview</h6><br />
+            <h6 className="text-xl text-center"> Terms and Conditions Preview</h6><br />
 
             <p className="">
                 ADD TO WEBSITE
-
                 EDIT
-
                 DELETE
                 TERMS AND CONDITIONS
-
                 Last updated August 22, 2023
-
-
-
                 AGREEMENT TO OUR LEGAL TERMS
             </p>
 
