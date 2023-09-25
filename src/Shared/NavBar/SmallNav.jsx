@@ -1,11 +1,10 @@
-import React from 'react';
-import { HiChevronUpDown, HiCheck, HiHome, HiUser, HiViewColumns, HiEnvelope } from "react-icons/hi2";
+
+import { HiHome,  } from "react-icons/hi2";
 import { Link } from 'react-router-dom';
 import noProfile from "../../assets/other/blank.png";
 import useMyData from '../../Hooks/useMyData';
 import { useContext } from 'react';
 import { AuthContext } from '../../Provider/AuthProvider';
-import { PiBinocularsFill } from "react-icons/pi";
 import { MdPayments } from "react-icons/md";
 import { FaBlogger } from 'react-icons/fa';
 const SmallNav = () => {
@@ -37,13 +36,7 @@ const SmallNav = () => {
                         to={"/allUser"}  
                         className={`relative flex items-center group hover:text-accent transition-all duration-300`}
                     >
-                        <div className="absolute pr-14 right-0 hidden xl:group-hover:flex">
-                            <div className="bg-white relative flex text-primary items-center p[6px] rounded-full opacity-80">
-                                <div className="text-[15px] leading-none font-semibold capitalize p-3">Explore</div>
-
-                            </div>
-                        </div>
-                        <div className="text-white text-2xl"><PiBinocularsFill/></div>
+                     
                       
                     </Link>
                     <DropdownProfile userInfo={userInfo} logOut={handleLogOut}></DropdownProfile>

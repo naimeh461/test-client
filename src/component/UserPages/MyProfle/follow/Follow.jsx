@@ -3,20 +3,16 @@ import useMyData from "../../../../Hooks/useMyData";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import "react-tabs/style/react-tabs.css";
+import "../../../../style.css";
 
 const Follow = () => {
   const [userInfo] = useMyData();
   const [following, setFollowing] = useState([]);
   const [followers, setFollowers] = useState([]);
- console.log(followers)
- console.log(following )
- console.log(userInfo )
+
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:5000/showFlowing/${userInfo._id}`
-      )
+      .get(`https://soulmates-server.vercel.app/showFlowing/${userInfo._id}`)
       .then((response) => {
         if (response.data) {
           setFollowing(response.data?.favUser);
@@ -26,12 +22,10 @@ const Follow = () => {
 
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:5000/showFlowers/${userInfo._id}`
-      )
+      .get(`https://soulmates-server.vercel.app/showFlowers/${userInfo._id}`)
       .then((response) => {
         if (response.data) {
-          setFollowers(response?.data);
+          setFollowers(response.data);
         }
       });
   }, [userInfo]);
@@ -45,17 +39,19 @@ const Follow = () => {
       <div className="p-4">
         <div className="bg-[#F0F2F5] py-3 px-4 rounded-2xl text-[#536279] text-base place-items-center">
           <Tabs>
-            <TabList>
-              <Tab>Following</Tab>
-              <Tab>Followers</Tab>
+            <TabList className="text-center flex gap-4 justify-center mb-4">
+              <Tab className="btn bg-gray-400 text-white btn-sm">Following</Tab>
+              <Tab className="btn bg-gray-400 text-white btn-sm">Followers</Tab>
             </TabList>
 
+
             <TabPanel>
+              
               {following?.length > 0 ? (
                 <>
                   {following?.map((follow) => (
                     <Link to={`/profile/${follow.favId}`} key={follow.favId}>
-                      <div className="flex items-center space-x-4 p-4 border-b border-gray-300">
+                      <div className="flex items-center space-x-4 p-4 ">
                         <div className="flex-shrink-0">
                           <img
                             src={follow.favImg}

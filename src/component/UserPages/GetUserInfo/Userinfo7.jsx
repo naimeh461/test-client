@@ -29,35 +29,37 @@ const Userinfo7 = () => {
         const formData = new FormData();
         formData.append("image", data.image[0]);
 
-        fetch(image_hosting_url, {
-            method: "POST",
-            body: formData,
-        })
-            .then((res) => res.json())
-            .then((imgResponse) => {
-                if (imgResponse.success) {
-                    const imgUrl = imgResponse.data.display_url;
-                    const userinfo = { verificationImage: imgUrl, id: userInfo._id, profile_complete: 100, email: userInfo.email, name: userInfo.name , userImage: userInfo.profileImage}
-                    fetch('http://localhost:5000/update7', {
-                        method: "PUT",
-                        headers: {
-                            "content-type": "application/json"
-                        },
-                        body: JSON.stringify(userinfo)
-                    })
-                        .then(res => res.json())
-                        .then(data => {
-                            console.log(data)
-                            reset();
-                            navigate("/myProfile");
-                        })
-                }
-
-
+            fetch(image_hosting_url, {
+                method: "POST",
+                body: formData,
             })
+                .then((res) => res.json())
+                .then((imgResponse) => {
+                    if (imgResponse.success) {
+                        const imgUrl = imgResponse.data.display_url;
+                        const userinfo = { verificationImage: imgUrl, id: userInfo._id, profile_complete: 100, email: userInfo?.email, name: userInfo?.name , userImage: userInfo?.profileImage}
+                        fetch('http://localhost:5000/update7', {
+                            method: "PUT",
+                            headers: {
+                                "content-type": "application/json"
+                            },
+                            body: JSON.stringify(userinfo)
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(data)
+                                reset();
+                                navigate("/myProfile");
+                            })
+                    }
+    
+    
+                })
+
+
     }
     return (
-        <div>
+        <div className="select-none">
             <div className="bg-green-200 h-2" style={{ width: `${70}%` }}></div>
             <form className='p-10' onSubmit={handleSubmit(onSubmit)}>
 

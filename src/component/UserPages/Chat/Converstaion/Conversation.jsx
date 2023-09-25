@@ -3,13 +3,8 @@ import axios from 'axios';
 
 const Conversation = ({ conversation, currentUser, messages, selected }) => {
     const [user, setUser] = useState(null);
-
-    console.log(user);
-
-
     useEffect(() => {
         const friendId = conversation?.members.find((m) => m !== currentUser._id);
-    
         if (friendId) {
           const getUser = async () => {
             try {

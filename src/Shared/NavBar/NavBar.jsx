@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo/logo3.png";
 import useMyData from "../../Hooks/useMyData";
 import noProfile from "../../assets/other/blank.png";
-import { useContext} from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Headroom from "react-headroom";
 import "./NavBar.css";
@@ -52,7 +52,7 @@ const NavBar = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
-              <NavItems></NavItems>
+              <NavItems userInfo={userInfo}></NavItems>
             </ul>
           </div>
           <Link to="/" className="">
@@ -61,7 +61,7 @@ const NavBar = () => {
         </div>
         <div className="lg:navbar-center hidden lg:flex ">
           <ul className="menu menu-horizontal px-1">
-            <NavItems></NavItems>
+            <NavItems userInfo={userInfo}></NavItems>
           </ul>
         </div>
         <div className="navbar-end ml-auto">
@@ -93,7 +93,7 @@ const NavBar = () => {
   );
 };
 
-const NavItems = () => {
+const NavItems = ({userInfo}) => {
   return (
     <>
       <li className=" font-semibold text-base dark:bg-gray-400 dark:text-white">
@@ -107,7 +107,7 @@ const NavItems = () => {
           Home
         </NavLink>
       </li>
-      <li className=" font-semibold text-base dark:bg-gray-400 dark:text-white">
+      {userInfo?.status === "successful" ? <></> : <>  <li className=" font-semibold text-base dark:bg-gray-400 dark:text-white">
         <NavLink
           to="/allUser"
           className={({ isActive }) =>
@@ -117,7 +117,7 @@ const NavItems = () => {
         >
           Explore
         </NavLink>
-      </li>
+      </li></>}
       <li className=" font-semibold text-base dark:bg-gray-400 dark:text-white">
         <NavLink
           to="/about"
@@ -140,7 +140,19 @@ const NavItems = () => {
           Blog
         </NavLink>
       </li>
+      {userInfo?.status === "successful" ? <>
       <li className=" font-semibold text-base dark:bg-gray-400 dark:text-white">
+        <NavLink
+          to="/galleryPage"
+          className={({ isActive }) =>
+            isActive ?
+              "w-fit block after:block after:h-[3px] after:bg-[#4BE5E7] after:w-[30px]" : ""
+          }
+        >
+          Gallery
+        </NavLink>
+      </li>
+      </> : <> <li className=" font-semibold text-base dark:bg-gray-400 dark:text-white">
         <NavLink
           to="/plans"
           className={({ isActive }) =>
@@ -150,7 +162,7 @@ const NavItems = () => {
         >
           Plans
         </NavLink>
-      </li>
+      </li></> }
     </>
   );
 };

@@ -21,7 +21,7 @@ const About = () => {
   const [team, setTeam] = useState([]);
   console.log(team);
   useEffect(() => {
-    fetch("http://localhost:5000/team")
+    fetch("https://soulmates-server.vercel.app/team")
     .then((res) => res.json())
     .then((data) => setTeam(data));
   }, []);

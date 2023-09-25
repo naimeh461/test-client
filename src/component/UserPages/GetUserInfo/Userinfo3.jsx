@@ -34,7 +34,7 @@ const Userinfo3 = () => {
 
     }
     return (
-        <div>
+        <div className="select-none">
             <div className="bg-green-200 h-2" style={{ width: `${45}%` }}></div>
             <section className="lg:max-w-4xl w-[90%] mx-auto rounded-md shadow-xl my-10  bg-opacity-10">
                 <div className='flex justify-center bg-[#fa604c] p-2 rounded-t-xl w-full'> <h1 className="text-xl font-bold text-white capitalize">Life Style & Values</h1></div>

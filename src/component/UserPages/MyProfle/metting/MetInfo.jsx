@@ -1,27 +1,13 @@
-import axios from "axios";
 import { formatMetDate, updateStatus } from "../../../../utilities/utilities";
 import { Link } from "react-router-dom";
 
-const MetInfo = ({ infoData, actionType, refetch, user }) => {
+const MetInfo = ({ infoData, actionType, refetch }) => {
   const acceptHandle = (delId) => {
     updateStatus("acceptMet", delId, "accept", refetch);
   };
 
   const deleteHandle = (delId) => {
     updateStatus("deleteMet", delId, "reject", refetch);
-  };
-  const reviewHandle = (delId) => {
-    const delMEt = {
-      setby: user,
-      status: "proposed",
-    };
-    axios
-      .put(`http://localhost:5000/setProposal/${delId}`, delMEt)
-      .then((response) => {
-        if (response.data.modifiedCount > 0) {
-          refetch();
-        }
-      });
   };
 
   return (
@@ -56,19 +42,18 @@ const MetInfo = ({ infoData, actionType, refetch, user }) => {
               <div className="flex-shrink-0 space-x-2 text-right">
                 {actionType === "accept" && (
                   <>
-                    <div className="grid grid-rows-2 gap-2">
+                    <div className="flex gap-2">
                       <button
                         disabled
                         className="bg-green-500 text-white text-sm px-3 py-1 rounded-full"
                       >
                         Accepted
                       </button>
-                      <button
-                        onClick={() => reviewHandle(req.metId)}
-                        className="bg-green-500 text-white text-sm px-3 py-1 rounded-full"
-                      >
-                        Want Married?
-                      </button>
+                      <Link to={`/profile/${req._id}`}>
+                        <button className="bg-green-500 text-white text-sm px-3 py-1 rounded-full">
+                          Want Married?
+                        </button>
+                      </Link>
                     </div>
                   </>
                 )}

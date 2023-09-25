@@ -6,6 +6,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../Provider/AuthProvider';
+import Header from '../../../Shared/Header/Header';
 
 
 
@@ -57,6 +58,7 @@ const AddBlog = () => {
 
   return (
     <div className=' max-w-7xl mx-auto'>
+      <Header title="Add Blogs" />
       <form onSubmit={handleSubmit(onSubmit)} className='space-y-6 px-10 bg-white my-10 py-10 w-[700px] mx-auto rounded-[30px]' action="">
         {/* input field */}
         <div>

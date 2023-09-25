@@ -3,28 +3,16 @@ import "./ChatOnline.css"
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
+import useAllUserImp from "../../../../Hooks/useAllUserImp";
 const ChatOnline = ({ onlineUsers, currentId, setCurrentChat , refetch}) => {
    
 
-    const [allUsers, setAllUser] = useState([]);
     const [onlineFriends, setOnlineFriends] = useState([])
-    
-
-    
+    const [userData] = useAllUserImp();
 
     useEffect(() => {
-        const getUsers = async () => {
-            const res = await axios.get("http://localhost:5000/allUser");
-            setAllUser(res.data);
-        };
-
-        getUsers();
-    }, [currentId]);
-
-
-    useEffect(() => {
-        setOnlineFriends(allUsers.filter(user => onlineUsers.some(onlineUser => onlineUser.userId === user._id)));
-    }, [onlineUsers, allUsers]);
+        setOnlineFriends(userData.filter(user => onlineUsers.some(onlineUser => onlineUser.userId === user._id)));
+    }, [onlineUsers, userData]);
     const handleClick = async (user) => 
     {
         try{

@@ -4,7 +4,7 @@ import useMyData from "../../../Hooks/useMyData";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
-
+import noImg from "../../../assets/other/blank.png"
 const SingleUserCard = ({ filteredUser }) => {
   const [userInfo, refetch] = useMyData();
   const navigate = useNavigate();
@@ -114,11 +114,11 @@ const SingleUserCard = ({ filteredUser }) => {
     <div className="hover:shadow-xl duration-100 border border-[#E1E5EA] rounded-2xl pt-3 pl-3 pr-3 font-lato z-0 dark:text-white dark:bg-gray-500">
       {/* img and location */}
       <div className="relative rounded-2xl overflow-hidden ">
-        <img
+        {profileImage ? <><img
           className="md:h-[430px] w-full object-cover object-top "
           src={profileImage}
           alt=""
-        />
+        /></> : <><img   className="md:h-[430px] w-full object-cover object-top " src={noImg}></img></>}
         <div className="flex items-center bg-[#272932a6] text-white gap-2 rounded-tr-2xl py-1 px-2 absolute left-0 bottom-0">
           <CiLocationOn className="text-xl " />
           <p>{country}</p>
@@ -160,9 +160,7 @@ const SingleUserCard = ({ filteredUser }) => {
       </div>
       {/* button section */}
       <div className="flex gap-5 py-5">
-        <button className="bg-[#A4B0C1] md:w-[82px] w-[40px] h-[40px] md:h-[55px] md:px-[15px] md:py-[13px] rounded-full flex items-center justify-center ">
-          <img className="" src={share} alt="" />
-        </button>
+        
         <Link
           to={`/profile/${_id}`}
           onClick={handleVisitPermit}

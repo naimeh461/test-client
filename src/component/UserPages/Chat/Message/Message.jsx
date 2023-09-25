@@ -3,7 +3,6 @@ import { format } from 'timeago.js';
 import noProfile from "../../../../assets/other/blank.png"
 
 const Message = ({ message, own, friend, userInfo }) => {
-    console.log(message)
     
     return (
         <>

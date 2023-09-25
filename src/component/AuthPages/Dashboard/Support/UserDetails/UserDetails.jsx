@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../../Provider/AuthProvider";
 import { data } from "autoprefixer";
+import DashboardProfile from "../../Shared/DashboardProfile";
 
 const UserDetails = () => {
   const { user } = useContext(AuthContext);
@@ -14,14 +15,13 @@ const UserDetails = () => {
 
   
   return (
-    <div>
+   
       <div>
-        <h1 className=" bg-[#f8e5e9] py-14 text-center text-[#cc294c] font-semibold text-3xl">
-          Welcome Back {user?.displayName}!
-        </h1>
-      </div>
-      <div className="flex justify-around my-10">
-        <div className=" ml-5">
+      
+        <div className="flex flex-col items-center">
+      <DashboardProfile/>
+      <div className="  md:flex flex-row justify-around m-10">
+        <div className=" m-5">
           <div className="stats stats-vertical shadow">
             <div className="stat flex items-center justify-between">
               <h1 className="stat-title font-semibold text-lg">Package</h1>
@@ -72,7 +72,7 @@ const UserDetails = () => {
           </div>
         </div>
         {/* total number */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div className="stats stats-vertical lg:stats-horizontal shadow w-full gap-5">
             <div className="stat flex items-center justify-between">
               <div className="stat-title">Total Blogs</div>
@@ -102,6 +102,7 @@ const UserDetails = () => {
           </div>
           {/* end */}
         </div>
+    </div>
     </div>
     </div>
   );

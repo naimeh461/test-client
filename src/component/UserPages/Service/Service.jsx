@@ -11,6 +11,7 @@ import home from '../../../assets/plan/home.svg'
 import { Autoplay, Pagination, Navigation, A11y } from "swiper/modules";
 import { Link } from "react-router-dom";
 import Happy2 from "./Happy2";
+import HappyStory from "../Home/HappyStory/HappyStory";
 
 const Service = () => {
   const [catering, setCatering] = useState([]);
@@ -233,14 +234,16 @@ const Service = () => {
         <div className="bg-[#FBF2E4] h-[235px]">
           <div className="max-w-7xl mx-auto h-full flex justify-between items-center">
             <div className="ms-4 text-left">
-              <p className="font-alice text-[28px] text-[#272932]">"Share Your Happy Moment With Us!"</p>
-              <p className="text-[#3E4A5B]"> Encourage other's to<br /> Find there soulmate </p>
+              <p className="font-alice text-[28px] text-[#272932]">Share Your Happy Moment With Us!</p>
+              <p className="text-[#3E4A5B]"> Encourage others to<br /> Find there soulmate </p>
               <p className="flex text-[#536279] font-lato pt-7"><img className="mr-1" src={home} alt="" /> <Link to='/'>Home</Link> <span className="mx-2">/</span><img className="mr-1" src={scop} alt="" /> <Link to='/plan'>Plan</Link></p>
             </div>
             <img className="h-full" src={couple} alt="" />
           </div>
         </div>
         <Happy2 />
+
+        <HappyStory></HappyStory>
       </div>
 
     </>

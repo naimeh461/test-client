@@ -86,11 +86,11 @@ const Contact = () => {
             <div className="bg-white p-[12px] rounded-full border border-[#6b7b958c]">
               <BsTelephone className="text-2xl" />
             </div>
-            <p className="text-[#3E4A5B] text-[18px]">
+            <div className="text-[#3E4A5B] text-[18px]">
               <span className=" mr-1 text-[26px] font-alice dark:text-gray-200 c">Phone Number:</span>
               <p className="dark:text-gray-200">Office: +123 456 789</p>
               <p className="dark:text-gray-200">Support: +123 456 789</p>
-            </p>
+            </div>
           </div>
           <div className="flex items-start gap-2">
             <div className="bg-white p-[12px] rounded-full border border-[#6b7b958c]">

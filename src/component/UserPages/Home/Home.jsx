@@ -5,10 +5,16 @@ import BestRecommendation from "./BestRecommendation/BestRecommendation";
 import WhyChooseUs from "./WhyChooseUs/WhyChooseUs";
 import HomeBanner from "./HomeBanner/HomeBanner";
 import HappyStory from "./HappyStory/HappyStory";
+import useMyData from "../../../Hooks/useMyData";
+import Service from "../Service/Service";
 
 
 const Home = () => {
-  
+  const [userInfo, refetch] = useMyData();
+  if(userInfo?.status === "successful")
+  return(
+    <><Service></Service></>
+    )
   return (
 
     <>

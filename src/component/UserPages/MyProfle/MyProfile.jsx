@@ -65,6 +65,9 @@ const MyProfile = () => {
     if (profile_complete === 90) {
       setShowModal7(true);
     }
+    if (profile_complete < 90) {
+      setShowModal7(false);
+    }
   }, [profile_complete]);
 
 

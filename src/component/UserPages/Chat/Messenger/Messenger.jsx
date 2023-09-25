@@ -10,6 +10,8 @@ import video from '../../../../assets/chat/video.svg';
 import call from '../../../../assets/chat/call.svg';
 import send from '../../../../assets/chat/send.svg';
 import MeetAndProposal from '../Meet and proposal/MeetAndProposal';
+import FixedMet from '../../MyProfle/metting/FixedMet';
+import RelationSts from '../../MyProfle/relationSts/RelationSts';
 
 const Messenger = () => {
     const [conversations, setConversations] = useState([]);
@@ -147,7 +149,7 @@ const Messenger = () => {
         <>
             <div className="messenger ">
                 {/* Chat menu */}
-                <div className="chatMenu">
+                <div className="xl:w-[20%] w-[25%]">
                     <div>
                         <h2 className="text-center text-2xl font-alice">Message</h2>
                         <ChatOnline onlineUsers={onlineUsers} currentId={userInfo._id} setCurrentChat={setCurrentChat} refetch={refetch} />
@@ -174,9 +176,13 @@ const Messenger = () => {
                                             <img className='w-[50px] h-[50px] rounded-full object-cover object-top ' src={friend?.profileImage} alt="" />
                                             <div className="">
                                                 <p className='text-[#434656] font-alice text-[18px]'>{friend?.name}</p>
-                                                <p className='font-lato text-[#4ECA77] text-[12px]'>Online</p>
                                             </div>
                                         </div>
+                                            <div className="flex gap-4 lg:hidden">
+                                                <FixedMet partnerUserID={friend?._id} />
+                                                <RelationSts partnerUser={friend} />
+
+                                            </div>
                                     </div>
                                 </div>
                                 <div className="chatBoxTop hide-scrollbar">
@@ -202,7 +208,7 @@ const Messenger = () => {
 
 
                 {/* chat online */}
-                <div className="chatOnline ">
+                <div className="chatOnline hidden xl:block">
                     <div className="chatOnlineWrapper">
                         {
                             currentChat ? <><MeetAndProposal friend={friend} userInfo={userInfo}></MeetAndProposal></> : <></>

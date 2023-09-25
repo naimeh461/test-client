@@ -36,9 +36,9 @@ const genders = [
 const UserInfo1 = () => {
   const location = useLocation();
   const profileFor = location.state;
-
+  const [userInfo] = useMyData();
   const navigate = useNavigate();
-  const { register, handleSubmit, reset } = useForm();
+  const {  handleSubmit, reset } = useForm();
   const [selectedOption, setSelectedOption] = useState({});
   const [maritalStatus, setMaritalStatus] = useState({});
   const [religion, setReligion] = useState({});
@@ -128,7 +128,7 @@ const UserInfo1 = () => {
 
 
   return (
-    <div>
+    <div className="select-none">
       <div className="bg-green-200 h-2" style={{ width: `${10}%` }}></div>
       <section className="lg:max-w-4xl w-[90%]   mx-auto rounded-md shadow-xl my-10  bg-opacity-10">
         <div className="flex justify-center bg-[#fa604c] p-2 rounded-t-xl w-full">

@@ -104,5 +104,8 @@
 /* for profile gallery */
 .lg-react-element{
   @apply flex lg:flex-col gap-2 
+}
 
+.profile .lg-react-element{
+    @apply flex flex-row flex-wrap
 }

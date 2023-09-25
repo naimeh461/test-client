@@ -1,19 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  useCustomQuery,
-  useProposalInfo,
-} from "../../../../utilities/utilities";
+import { useCustomQuery } from "../../../../utilities/utilities";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import "react-tabs/style/react-tabs.css";
+import "../../../../style.css";
 import MetInfo from "./MetInfo";
 
 const FixedMet = ({ partnerUser }) => {
   const { _id } = partnerUser;
   const params = useParams();
   const [userId, setUserId] = useState("");
-  const { refetchProposal } = useProposalInfo(userId);
- 
+
   useEffect(() => {
     if (params.id) {
       setUserId(params.id);
@@ -24,29 +20,27 @@ const FixedMet = ({ partnerUser }) => {
 
   const { refetch: refetchAccept, data: acceptInfo = [] } = useCustomQuery(
     ["accept", userId],
-    `http://localhost:5000/reqAccept/${userId}`
+    `https://soulmates-server.vercel.app/reqAccept/${userId}`
   );
 
   const { refetch: refetchPending, data: pendingInfo = [] } = useCustomQuery(
     ["req", userId],
-    `http://localhost:5000/getReqPending/${userId}`
+    `https://soulmates-server.vercel.app/getReqPending/${userId}`
   );
 
   const { refetch: refetchReq, data: requestInfo = [] } = useCustomQuery(
     ["pending", userId],
-    `http://localhost:5000/sendReqPending/${userId}`
+    `https://soulmates-server.vercel.app/sendReqPending/${userId}`
   );
 
   useEffect(() => {
     refetchAccept();
     refetchReq();
     refetchPending();
-    refetchProposal();
   }, [userId]);
 
   const refetch = () => {
     refetchAccept();
-    refetchProposal();
     refetchReq();
     refetchPending();
   };
@@ -54,11 +48,12 @@ const FixedMet = ({ partnerUser }) => {
   return (
     <>
       <Tabs>
-        <TabList>
-          <Tab>Pendings</Tab>
-          <Tab>Accept</Tab>
-          <Tab>Request Sent</Tab>
+        <TabList className="text-center flex gap-4 justify-center mb-4">
+          <Tab className="btn bg-gray-400 text-white btn-sm">Pendings</Tab>
+          <Tab className="btn bg-gray-400 text-white btn-sm">Accept</Tab>
+          <Tab className="btn bg-gray-400 text-white btn-sm">Request Sent</Tab>
         </TabList>
+
 
         <TabPanel>
           <MetInfo

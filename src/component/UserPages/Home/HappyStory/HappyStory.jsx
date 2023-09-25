@@ -61,7 +61,7 @@ const HappyStory = () => {
             ) : (
               <p>No reviews found.</p>
             )}
-            <div className="absolute -left-[420px] bottom-10">
+            <div className="absolute -left-[390px] bottom-10">
               <SwiperNavButtons />
             </div>
           </Swiper>

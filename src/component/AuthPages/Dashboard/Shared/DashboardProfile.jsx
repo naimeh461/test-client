@@ -17,15 +17,37 @@ const DashboardProfile = () => {
   },[user])
 
     return (
-      <div className='h-screen'>
-        <div className="flex flex-col items-center ">
-          <img className="w-64 h-64 object-cover object-top rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mt-28" src={profileDatas?.profileImage} alt="" />
-          <h4 className="text-center text-3xl text-cyan-700 font-medium mt-8">{profileDatas?.name}</h4>
-          <p className="text-center text-xl my-2 text-cyan-700 font-medium">{profileDatas?.email}</p>
-          <h6 className="text-center text-lg text-gray-500 border-2 border-gray-500 w-1/3 p-3  font-medium italic">{profileDatas?.role} || {profileDatas?.status}</h6>
-        </div>
+//       <div className=' flex flex-row items-center max-w-xs p-6 shadow-md rounded-xl sm:px-12my-4 dark:bg-gray-900 dark:text-gray-100 bg-blue-200'>
+       
+        
+// 	<img src={profileDatas?.profileImage} alt="" className="w-32 h-32 mx-auto rounded-full dark:bg-gray-500 aspect-square" />
+// 	<div className="flex space-y-4 text-center divide-x divide-gray-700">
+// 		<div className="my-2 space-y-1">
+// 			<h2 className="text-xl font-semibold sm:text-2xl">{profileDatas?.name}</h2>
+// 			<p className="px-5 text-xs sm:text-base dark:text-gray-400">{profileDatas?.email}</p>
+// 		</div>
+// 		<div className="flex justify-center pt-2 space-x-4 align-center">
+// 			<p>{profileDatas?.role} || {profileDatas?.status}</p>
+// 		</div>
+// 	</div>
+
+  
+// </div>
            
-      </div>
+<div className="m-4 max-w-md p-8 sm:flex sm:space-x-6 rounded-xl bg-blue-200 dark:bg-gray-900 dark:text-gray-100">
+<div className="flex-shrink-0 w-full mb-6 h-44 sm:h-32 sm:w-32 sm:mb-0">
+  <img src={profileDatas?.profileImage} alt="" className="object-cover object-center w-full h-full rounded dark:bg-gray-500" />
+</div>
+<div className="flex flex-col space-y-4">
+  <div>
+    <h2 className="text-2xl font-semibold">{profileDatas?.name}</h2>
+    <span className="text-sm dark:text-gray-400">{profileDatas?.email}</span>
+  </div>
+  <div className="space-y-1">
+  <p>{profileDatas?.role} || {profileDatas?.status}</p>
+  </div>
+</div>
+</div>
     );
 };
 

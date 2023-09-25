@@ -13,11 +13,10 @@ const FixedMet = ({ partnerUserID }) => {
   const { user, loading } = useContext(AuthContext);
   const [metForm, setMetForm] = useState(true);
 
-
   useEffect(() => {
     axios
       .get(
-        `http://localhost:5000/userPlanInfo?email=${user?.email}`
+        `https://soulmates-server.vercel.app/userPlanInfo?email=${user?.email}`
       )
       .then((response) => {
         setUserInfo(response.data);
@@ -44,7 +43,7 @@ const FixedMet = ({ partnerUserID }) => {
 
     axios
       .post(
-        `http://localhost:5000/setMeeting?email=${user?.email}`,
+        `https://soulmates-server.vercel.app/setMeeting?email=${user?.email}`,
         setMet
       )
       .then((response) => {
@@ -55,13 +54,11 @@ const FixedMet = ({ partnerUserID }) => {
       });
   };
 
-
-
   return (
     <div>
       <button
         onClick={showModal}
-        className="py-4 px-6 bg-[#128587] text-[#F0F2F5] rounded-full"
+        className="xl:py-4 xl:px-4 py-2 px-2 bg-[#128587] text-[#F0F2F5] rounded-full"
       >
         Invite Meeting
       </button>

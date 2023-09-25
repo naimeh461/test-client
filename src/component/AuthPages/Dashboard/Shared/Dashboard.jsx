@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import sliderbtn from "../../../../assets/other/control.png"
 import { BiHome, BiUser, BiSolidUserCircle } from "react-icons/bi";
 import { MdOutlineMedicalServices } from "react-icons/md";
@@ -95,55 +95,132 @@ const Dashboard = () => {
 
     if (userData?.status === "approved")
         return (
-            <div className="flex select-none">
-                <div className={` ${open ? "w-72" : "w-20 "}  h-screen p-5  pt-8 relative duration-300 `}>
-                    <img src={sliderbtn} className={`absolute cursor-pointer -right-3 top-[90px] w-7 border-dark-purple border-2 rounded-full  ${!open && "rotate-180"}`} onClick={() => setOpen(!open)} />
-                    <div className="flex gap-x-4 items-center ">
-                        <img src="" className={`cursor-pointer duration-500 ${open && "rotate-[360deg] "}`} />
-                        <h1 className={` origin-left ms-12 font-medium text-2xl duration-200 ${!open && "scale-0 "}`}>Soulmate</h1>
-                    </div>
-                    <h4 className={` text-center mt-5 font-medium  duration-200 ${!open && "scale-0 "}`}>{user?.displayName}</h4>
+        //     <div className="flex select-none">
+        //         <div className={` ${open ? "w-72" : "w-20 "} hidden md:block  h-screen p-5  pt-8 relative duration-300 `}>
+        //             <img src={sliderbtn} className={`absolute cursor-pointer -right-3 top-[90px] w-7 border-dark-purple border-2 rounded-full  ${!open && "rotate-180"}`} onClick={() => setOpen(!open)} />
+        //             <div className="flex gap-x-4 items-center ">
+        //                 <img src="" className={`cursor-pointer duration-500 ${open && "rotate-[360deg] "}`} />
+        //                 <h1 className={` origin-left ms-12 font-medium text-2xl duration-200 ${!open && "scale-0 "}`}>Soulmate</h1>
+        //             </div>
+        //             <h4 className={` text-center mt-5 font-medium  duration-200 ${!open && "scale-0 "}`}>{user?.displayName}</h4>
 
-                    {
-                        isAdmin ? <ul className="pt-6 ">
-                            {adminRoutes.map((Menu, index) => (
-                                <li key={index} className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white  text-sm items-center gap-x-4 ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"} `}>
-                                    <NavLink to={Menu.link}>
-                                        <button className="flex items-center gap-5 cursor-pointer">
-                                            {Menu.icon}
-                                            <span className={`${!open && "hidden"} origin-left duration-200`}>
-                                                {Menu.title}
-                                            </span>
-                                        </button>
-                                    </NavLink>
-                                </li>
-                            ))}
-                        </ul> : <></>
-                    }
-                    {
-                        isSupport ? <ul className="pt-6 ">
-                            {supportRoutes.map((Menu, index) => (
-                                <li key={index} className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white  text-sm items-center gap-x-4 ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"} `}>
-                                    <NavLink to={Menu.link}>
-                                        <button className="flex items-center gap-5 cursor-pointer">
-                                            {Menu.icon}
-                                            <span className={`${!open && "hidden"} origin-left duration-200`}>
-                                                {Menu.title}
-                                            </span>
-                                        </button>
-                                    </NavLink>
-                                </li>
-                            ))}
-                        </ul> : <></>
-                    }
+        //             {
+        //                 isAdmin ? <ul className="pt-6 ">
+        //                     {adminRoutes.map((Menu, index) => (
+        //                         <li key={index} className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white  text-sm items-center gap-x-4 ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"} `}>
+        //                             <NavLink to={Menu.link}>
+        //                                 <button className="flex items-center gap-5 cursor-pointer">
+        //                                     {Menu.icon}
+        //                                     <span className={`${!open && "hidden"} origin-left duration-200`}>
+        //                                         {Menu.title}
+        //                                     </span>
+        //                                 </button>
+        //                             </NavLink>
+        //                         </li>
+        //                     ))}
+        //                 </ul> : <></>
+        //             }
+        //             {
+        //                 isSupport ? <ul className="pt-6 ">
+        //                     {supportRoutes.map((Menu, index) => (
+        //                         <li key={index} className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white  text-sm items-center gap-x-4 ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"} `}>
+        //                             <NavLink to={Menu.link}>
+        //                                 <button className="flex items-center gap-5 cursor-pointer">
+        //                                     {Menu.icon}
+        //                                     <span className={`${!open && "hidden"} origin-left duration-200`}>
+        //                                         {Menu.title}
+        //                                     </span>
+        //                                 </button>
+        //                             </NavLink>
+        //                         </li>
+        //                     ))}
+        //                 </ul> : <></>
+        //             }
+        //         </div>
+        //         <div className="flex-1 bg-slate-200 flex-col flex-grow">
+        //             <DashboardNav></DashboardNav>
+        //             <div className=""><Outlet></Outlet></div>
+        //             <FooterDashboard></FooterDashboard>
+        //             <SmallNav />
+        //         </div>
+
+        //     </div>
+        // 
+        
+
+          
+        
+        <div className="">
+            <div className="flex">
+              <div className={` ${open ? "w-72" : "w-20 "} hidden md:block  h-screen p-5  pt-8 relative duration-300 `}>
+                <img src={sliderbtn} className={`absolute cursor-pointer -right-3 top-[90px] w-7 border-dark-purple border-2 rounded-full  ${!open && "rotate-180"}`} onClick={() => setOpen(!open)} />
+                <div className="flex gap-x-4 items-center ">
+                  <img src="" className={`cursor-pointer duration-500 ${open && "rotate-[360deg] "}`} />
+                  <h1 className={` origin-left ms-12 font-medium text-2xl duration-200 ${!open && "scale-0 "}`}>Soulmate</h1>
                 </div>
-                <div className="flex-1 bg-slate-200 flex-col flex-grow">
-                    <DashboardNav></DashboardNav>
-                    <div className=""><Outlet></Outlet></div>
-                    <FooterDashboard></FooterDashboard>
-                </div>
+                <h4 className={` text-center mt-5 font-medium  duration-200 ${!open && "scale-0 "}`}>{user?.displayName}</h4>
+
+                {
+                  isAdmin ? <ul className="pt-6 ">
+                    {adminRoutes.map((Menu, index) => (
+                      <li key={index} className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white  text-sm items-center gap-x-4 ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"} `}>
+                        <NavLink to={Menu.link}>
+                          <button className="flex items-center gap-5 cursor-pointer">
+                            {Menu.icon}
+                            <span className={`${!open && "hidden"} origin-left duration-200`}>
+                              {Menu.title}
+                            </span>
+                          </button>
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul> : <></>
+                }
+                {
+                  isSupport ? <ul className="pt-6 ">
+                    {supportRoutes.map((Menu, index) => (
+                      <li key={index} className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white  text-sm items-center gap-x-4 ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"} `}>
+                        <NavLink to={Menu.link}>
+                          <button className="flex items-center gap-5 cursor-pointer">
+                            {Menu.icon}
+                            <span className={`${!open && "hidden"} origin-left duration-200`}>
+                              {Menu.title}
+                            </span>
+                          </button>
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul> : <></>
+                }
+              </div>
+
+              <div className="flex flex-col w-full ">
+                <DashboardNav />
+                <div className="flex-grow"><Outlet /></div>
+
+                {isSupport && <BottomNav supportRoutes={supportRoutes} />}
+                {isAdmin && <BottomNav adminRoutes={adminRoutes} supportRoutes={supportRoutes} />}
+              </div>
 
             </div>
+            <FooterDashboard />
+        </div>
+        
         );
+
+          
 };
 export default Dashboard;
+
+const BottomNav = ({adminRoutes, supportRoutes}) => {
+  return(
+    <div className="flex bg-primary-400 justify-evenly md:hidden">
+      {adminRoutes ? adminRoutes.map((adminRoute, index) => (
+        <Link className="p-2 text-gray-200  hover:bg-black" key={index} to={adminRoute.link}>{adminRoute.icon}</Link>
+      )) : <></>}
+      {supportRoutes ? supportRoutes.map((supportRoute, index) => (
+        <Link className="p-2 text-gray-200  hover:bg-black" key={index} to={supportRoute.link}>{supportRoute.icon}</Link>
+      )) : <></>}
+    </div>
+  )
+}

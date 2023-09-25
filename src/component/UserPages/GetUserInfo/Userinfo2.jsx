@@ -36,7 +36,7 @@ const Userinfo2 = () => {
             })
     }
     return (
-        <div>
+        <div className='select-none'>
             <div className="bg-green-200 h-2" style={{ width: `${30}%` }}></div>
             <section className=" w-[90%] lg:max-w-4xl  mx-auto rounded-md shadow-xl my-10  bg-opacity-10">
                 <div className='flex justify-center bg-[#fa604c] p-2 rounded-t-xl w-full'> <h1 className="text-xl font-bold text-white capitalize">Education & Job Information</h1></div>

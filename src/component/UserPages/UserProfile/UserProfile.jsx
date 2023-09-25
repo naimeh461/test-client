@@ -1,12 +1,14 @@
 import { BsTelephone } from "react-icons/bs";
+import Lottie from "lottie-react";
+import LightGallery from 'lightgallery/react';
+import lgThumbnail from 'lightgallery/plugins/thumbnail';
+import lgZoom from 'lightgallery/plugins/zoom';
+// import styles
+import 'lightgallery/css/lightgallery.css';
+import 'lightgallery/css/lg-zoom.css';
+import 'lightgallery/css/lg-thumbnail.css';
 import banner from "../../../assets/userProfile/userBanner.png";
-import img2 from "../../../assets/home/recommendation/girl.png";
-import img3 from "../../../assets/home/recommendation/girl2.png";
-import img4 from "../../../assets/home/recommendation/girl3.png";
-import img5 from "../../../assets/home/recommendation/girl4.png";
-import edit from "../../../assets/other/edit.svg";
-import share from "../../../assets/other/share.svg";
-import { Info } from "../MyProfle/Profile/Profile";
+import { GalleryImg, Info } from "../MyProfle/Profile/Profile";
 import ages from "../../../assets/other/age.svg";
 import heights from "../../../assets/other/height.svg";
 import jobs from "../../../assets/other/job.svg";
@@ -18,13 +20,16 @@ import file from "../../../assets/other/file.png";
 import useMyData from "../../../Hooks/useMyData";
 import Swal from "sweetalert2";
 import Follow from "../MyProfle/follow/Follow";
-import Proposal from "../MyProfle/proposal/Proposal";
 import ShowRltnNotify from "../MyProfle/relationSts/ShowRltnNotify";
 import { Link } from "react-router-dom";
 import { useRelationInfo } from "../../../utilities/utilities";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+
+// lottie files
+import manyLove from '../../../assets/lottie/manyLove.json'
+import topLottie from '../../../assets/lottie/bigLove.json'
 
 const UserProfile = () => {
   const [userInfo] = useMyData();
@@ -42,7 +47,7 @@ const UserProfile = () => {
     }
   }, [relationship]);
 
-  const { profileImage, name, email, _id, profileVisit, status } = userInfo;
+  const { profileImage, name, email, _id, profileVisit, status, gallery } = userInfo;
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -121,7 +126,10 @@ const UserProfile = () => {
                 alt=""
               />
               <img
-                className="absolute top-[50%] left-5 h-[150px] w-[150px] object-cover object-top rounded-full border-[3px] border-l-0 border-primary-400"
+
+                className={`absolute top-[50%] left-7 h-[150px] w-[150px] object-cover object-top rounded-full border-[3px] ${userInfo?.profile_complete === 100 ? 'border-green-400  border-l-0' : 'border-primary-400  border-l-0'
+                  }`}
+
                 src={profileImage}
                 alt=""
               />
@@ -129,20 +137,21 @@ const UserProfile = () => {
             <div className="flex flex-col md:flex-row gap-6 p-2">
               <div className="h-[30px] md:h-[150px] w-[150px] md:block"></div>{" "}
               {/* spacer */}
-              <div className="w-full mx-4">
+              <div className="w-full mx-4 mt-8">
                 <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between ">
-                  <div className="">
+                  <div className=" ml-4 ">
                     <p className="font-alice text-[30px] lg:text-[30px]  text-[#272932]">
                       {name}
                     </p>
                     <p>{email}</p>
                   </div>
-                  <div className="flex gap-2 items-end">
-                    <button className="bg-primary-300 px-[15px] py-[10px] rounded-full">
-                      <img className="" src={share} alt="" />
-                    </button>
-                    <EditBtn text="Edit Profile" />
-
+                  <div className="flex gap-2  justify-center items-center">
+                    <div className="text-[14px] text-center flex gap-3 bg-gray-200 py-3 px-4 rounded-lg">
+                      <p className="font-bold">
+                        {profileVisit < 0 ? 0 : profileVisit}
+                      </p>
+                      <p> Visit remaining</p>
+                    </div>
                     <button
                       onClick={() => handleDelete(_id)}
                       className="bg-primary-300 px-[12px] py-[10px] rounded-full tooltip"
@@ -153,65 +162,6 @@ const UserProfile = () => {
                   </div>
                 </div>
                 {/* follow section */}
-                {status === "successful" ? (
-                  <div className="flex justify-between mt-5">
-                    <p>
-                      Married with <Link>{partner?.name}</Link>
-                    </p>
-
-                    <div className="flex items-center space-x-4 p-4 border-b border-gray-300">
-                      <Link
-                        to={`/profile/${partner?._id}`}
-                        className="flex items-center gap-3"
-                      >
-                        <div className="flex-shrink-0">
-                          <img
-                            src={partner?.profileImage}
-                            className="h-12 w-12 rounded-full"
-                          />
-                        </div>
-
-                        <div className="flex-grow">
-                          <p className="text-lg font-medium text-gray-800">
-                            {partner?.name}
-                          </p>
-                        </div>
-                      </Link>
-                      <div className="flex-grow">
-                        <button
-                          onClick={() =>
-                            handlePartnerDelete(relationship[0]?._id)
-                          }
-                          className="bg-primary-300 px-[8px] py-[6px] rounded-full tooltip"
-                          data-tip="Delete Profile"
-                        >
-                          <AiOutlineDelete className="text-white text-1xl" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex justify-between mt-5 mr-8 md:mr-0">
-                    <div className="text-[18px] text-center">
-                      <p className="font-bold">100</p>
-                      <p>Sent Interested</p>
-                    </div>
-                    <div className="text-[18px] text-center">
-                      <p className="font-bold">400</p>
-                      <p>Followers</p>
-                    </div>
-                    <div className="text-[18px] text-center ">
-                      <p className="font-bold">2500</p>
-                      <p>Following</p>
-                    </div>
-                    <div className="text-[18px] text-center ">
-                      <p className="font-bold">
-                        {profileVisit < 0 ? 0 : profileVisit}
-                      </p>
-                      <p>Visit remaining</p>
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           </div>
@@ -220,18 +170,18 @@ const UserProfile = () => {
           <BoxBorderContent title="Status" content={<Status />} />
           <BoxBorderContent title="About Me" content={<AboutMe />} />
           <BoxBorderContent title="Personal Info" content={<PersonalInfo />} />
-          <BoxBorderContent title="Contact Info" content={<ContactInfo />} />
+        <BoxBorderContent title="Contact Info" content={<ContactInfo />} />
         </div>
 
         {/* other section */}
         <div className=" md:w-[40%]">
+          <MarriedStatus userInfo={userInfo} partner={partner} handlePartnerDelete={handlePartnerDelete} relationship={relationship} />
           <ShowRltnNotify />
           <MetForUser />
           <Follow />
-          <Proposal />
           <BoxBorderContent title="Hobbies" content={<Hobbies />} />
-          <BoxBorderContent title="Upload Your Photo" content={<SocialMedia />} />
-          {/* <Plan /> */}
+          <BoxBorderContent title="Photos" content={<SocialMedia gallery={gallery} />} />
+
         </div>
       </div>
     </div>
@@ -240,14 +190,39 @@ const UserProfile = () => {
 
 export default UserProfile;
 
-const EditBtn = ({ text }) => {
+const MarriedStatus = ({ userInfo, partner, handlePartnerDelete, relationship }) => {
+  console.log
   return (
-    <button className="bg-[#3E4A5B] text-[#F0F2F5] px-[15px] py-[10px] rounded-full flex gap-1 items-center">
-      <img className="" src={edit} alt="" />
-      {text}
-    </button>
-  );
-};
+    <>
+      {userInfo?.status === "successful" ? (
+        <div className="relative mb-5 flex flex-col  border border-[#C3CAD5] rounded-2xl overflow-hidden">
+          <div className="flex justify-end mt-2 mr-2">
+            <button
+              onClick={() =>
+                handlePartnerDelete(relationship[0]?._id)
+              }
+              className="bg-primary-300 px-[8px] py-[6px] rounded-full tooltip"
+              
+            >
+              <AiOutlineDelete className="text-white text-1xl" />
+            </button>
+          </div>
+          <Lottie className="w-[52%] h-[50%] mx-auto" animationData={topLottie} />
+          <Lottie className="absolute bottom-0" animationData={manyLove} />
+          <p className="text-3xl font-alice text-black text-center">In a relationship with </p>
+          <div className="flex justify-center items-center gap-3 mb-5 mt-2 rela">
+            <img src={partner?.profileImage} className="h-12 w-12 rounded-full" />
+            <Link to={`/profile/${partner?._id}`}>
+              <p className="text-[#3E43CB] text-lg font-lato text-center relative">{partner?.name}</p>
+            </Link>
+          </div>
+        </div>) : <></>
+      }
+    </>
+  )
+}
+
+  ;
 
 const BoxBorderContent = ({ title, content }) => {
   return (
@@ -275,7 +250,7 @@ const HBox = ({ value }) => {
 const Status = () => {
   const [userInfo] = useMyData();
 
-  const { age, height, jobSector, city , state } = userInfo;
+  const { age, height, jobSector, state } = userInfo;
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
       <div className="p-3  rounded-2xl bg-[#F0F2F5]">
@@ -420,13 +395,14 @@ const Hobbies = () => {
   );
 };
 
-const SocialMedia = () => {
+const SocialMedia = ({ gallery }) => {
   const [userInfo] = useMyData();
   const { register, handleSubmit } = useForm()
   const { _id } = userInfo;
   const imgHostingUrl = `https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.env.VITE_Image_Upload_Token}`
   const [loading, setLoading] = useState(false)
   const [imgURL, setImgURL] = useState(null)
+  console.log(userInfo)
 
   const upload = e => {
     setLoading(true)
@@ -480,13 +456,26 @@ const SocialMedia = () => {
 
   return (
     <div className="">
-      {imgURL && <img className="w-[125px] h-[113px] rounded-2xl object-cover " src={imgURL} />}
+      {/* {imgURL && <img className="w-[125px] h-[113px] rounded-2xl object-cover " src={imgURL} />} */}
+      <div className="overflow-x-scroll profile">
+        {
+          gallery && <LightGallery
+
+            speed={500}
+            plugins={[lgThumbnail, lgZoom]}
+          >
+            {
+              gallery?.map((img, index) => <GalleryImg key={index} img={img} isProfile={true} />)
+            }
+          </LightGallery>
+        }
+      </div>
       <form onSubmit={handleSubmit(upload)} className="">
 
         <div className="flex items-center justify-center w-full">
           <label htmlFor="dropzone-file" className="mt-4 py-5 flex flex-col items-center justify-center w-full  border-[#C3CAD5]  border-dashed border-2 cursor-pointer bg-gray-50  hover:bg-gray-100 rounded-2xl">
             <p className="flex items-center gap-2 text-xl text-primary-300"> <AiOutlinePlusCircle /> <span>Add Photo</span></p>
-            <input {...register('image')}  name="image" id="dropzone-file" type="file" className="hidden" />
+            <input {...register('image')} name="image" id="dropzone-file" type="file" className="hidden" />
           </label>
         </div>
 

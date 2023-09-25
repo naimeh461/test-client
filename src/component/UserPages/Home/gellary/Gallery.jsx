@@ -52,7 +52,7 @@ export const PhotoContainer = ({ img, imgStyle, isHome, maleName, femaleName, lo
     <div className="relative rounded-2xl overflow-hidden group">
       <img className={imgStyle ? imgStyle : "h-full w-full"} src={img} alt="" />
       <div className="absolute flex justify-between items-center bg-slate-800 w-full  bg-opacity-50 group-hover:bottom-0 -bottom-24 px-5 py-4 duration-300">
-        <div className="hidden md:block">
+        <div className={isHome && 'hidden md:block'}>
           <p className=' text-white font-alice text-[24px]'>{maleName} & {femaleName}</p>
           <p className='font-lato text-[18px] text-white'>{location} SoulMate</p>
         </div>
