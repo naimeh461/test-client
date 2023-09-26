@@ -43,7 +43,7 @@ const SignUp = () => {
               mobile: data.mobile,
               email: data.email,
               profile_complete: 10,
-              profileVisit: 50,
+              profileVisit: 20,
             };
             fetch("http://localhost:5000/alluser", {
               method: "POST",

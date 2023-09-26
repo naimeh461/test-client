@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import heart from '../../../../assets/home/newHomeBannerImg/heart.gif'
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +12,7 @@ const SearchFunction = () => {
   const navigate = useNavigate();
   let countryData = Country.getAllCountries();
   const onSubmit = data => {
-    const searchInfo = { gender: data?.gender , religion: data?.religion ,country : selectedCountry?.name, minAge: ageRange?.min , maxAge: ageRange?.max }
+    const searchInfo = { maritalStatus: data?.maritalStatus, religion: data?.religion, country: selectedCountry?.name, minAge: ageRange?.min, maxAge: ageRange?.max }
     navigate("/alluser", {
       state: searchInfo
     }
@@ -35,9 +34,9 @@ const SearchFunction = () => {
       setAgeRange({ ...ageRange, max: newMaxAge });
     }
   };
- 
+
   return (
-    <div className=" bg-white md:w-[436px] z-20 rounded-xl mt-[100px] pb-8 dark:bg-gray-400"  data-aos="fade-left" data-aos-duration="2000">
+    <div className=" bg-white md:w-[436px] z-20 rounded-xl mt-[100px] pb-8 dark:bg-gray-400" data-aos="fade-left" data-aos-duration="2000">
 
       <div className="w-[90%] mx-auto">
         <div className="flex items-center justify-between">
@@ -49,21 +48,6 @@ const SearchFunction = () => {
 
       <div>
         <form onSubmit={handleSubmit(onSubmit)} className="w-[90%] mx-auto space-y-4 mt-4 " action="">
-
-          <span className=" text-[18px] text-[#2A313C] font-medium ">I am Looking for a </span>
-          <div className="flex items-center justify-center h-full w-full">
-            <div className="relative w-full -mt-2">
-              <select
-                {...register("gender")}
-                className="  text-[16px] text-[#536279] bg-white px-4 py-2 border-2 border-primary-300  rounded-full  text-left transition-all cursor-pointer appearance-none focus:outline-none w-full " >
-                <option defaultValue value="">Pick one</option>
-                <option value="Female">Woman</option>
-                <option value="Male">Man</option>
-              </select>
-              <HiChevronUpDown className="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-400 pointer-events-none h-5 w-5 mr-3" aria-hidden="true" />
-            </div>
-          </div>
-
           {/* age */}
           <div className="">
             <span className=" text-[18px] text-[#2A313C] font-medium ">Age</span>
@@ -97,6 +81,8 @@ const SearchFunction = () => {
               </div>
             </div>
           </div>
+
+          
           {/* Religion */}
           <div className="form-control w-full">
             <span className=" text-[18px] text-[#2A313C] font-medium ">Religion</span>
@@ -170,6 +156,25 @@ const SearchFunction = () => {
               </Transition>
             </div>
           </Listbox>
+          {/* Religion */}
+          <div className="form-control w-full">
+            <span className=" text-[18px] text-[#2A313C] font-medium ">Marital Status</span>
+            <div className="flex items-center justify-center h-full w-full mt-3">
+              <div className="relative w-full">
+                <select {...register("maritalStatus")}
+                  className="  text-[16px] text-[#536279] bg-white px-4 py-2 border-2 border-primary-300  rounded-full  text-left transition-all cursor-pointer appearance-none focus:outline-none w-full " >
+                  <option defaultValue value="">Pick one</option>
+                  <option value="Single">Single</option>
+                  <option value="Married">Married</option>
+                  <option value="Divorced">Divorced</option>
+                  <option value="Widowed">Widowed</option>
+                  <option value="Separated">Separated</option>
+                </select>
+                <HiChevronUpDown className="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-400 pointer-events-none h-5 w-5 mr-3" aria-hidden="true" />
+              </div>
+            </div>
+          </div>
+              
           <div className="">
             <button className="bg-primary-500 text-white w-full py-2 rounded-full mt-4 btn hover:bg-primary-600">Search</button>
           </div>

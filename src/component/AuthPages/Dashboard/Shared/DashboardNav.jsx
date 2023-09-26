@@ -13,7 +13,7 @@ const DashboardNav = () => {
       .catch((error) => console.log(error));
   };
   return (
-    <div className="bg-base-100  p-2 text-right flex justify-end border-s-2">
+    <div className="bg-gray-100  p-2 text-right flex justify-end border-s-2 ">
       <div>
         {user ? (
           <div className="flex gap-2 items-center">
