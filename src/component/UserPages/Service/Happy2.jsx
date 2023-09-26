@@ -26,7 +26,7 @@ const Happy2 = () => {
         const finalData = { coupleName: reviewData.user + " and " + reviewData.patner, review: reviewData.details, imageURL: res.data.data.url, location: reviewData.location, date: startDate }
         console.log({ res, finalData })
         if (res.data.success) {
-          axios.post('http://localhost:5000/reviews', finalData)
+          axios.post('https://soulmates-server.vercel.app/reviews', finalData)
             .then(res => {
               console.log(res)
               if (res.data.insertedId) {

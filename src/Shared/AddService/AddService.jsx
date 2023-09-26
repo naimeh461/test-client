@@ -38,7 +38,7 @@ const AddService = () => {
     }
     console.log(data)
 
-    fetch('http://localhost:5000/service', {
+    fetch('https://soulmates-server.vercel.app/service', {
       method: "POST",
       headers: {
         "content-type": "application/json"

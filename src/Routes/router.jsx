@@ -47,6 +47,7 @@ import AdminRoute from "./AdminRoute";
 import SupportRoute from "./SupportRoute";
 import PaymentHistory from "../payments/PaymentHistory/PaymentHistory";
 import TermCondition from "../component/UserPages/SignUp/TermCondition";
+import SuccessAccount from "../component/UserPages/GetUserInfo/SuccessAccount";
 
 const router = createBrowserRouter([
   {
@@ -116,9 +117,8 @@ const router = createBrowserRouter([
         path: '/paymentHistory',
         element: <PaymentHistory />
       },
-      
       {
-        path: "/payment/success/:tranId",
+        path: "/payment/success",
         element: <PaymentSuccess></PaymentSuccess>,
       },
       {
@@ -167,7 +167,7 @@ const router = createBrowserRouter([
       {
         path: "hotel/:id",
         element: <ServiceCard></ServiceCard>,
-        loader: ({ params }) => fetch(`http://localhost:5000/service/${params.id}`),
+        loader: ({ params }) => fetch(`https://soulmates-server.vercel.app/service/${params.id}`),
 
       },
    
@@ -201,6 +201,10 @@ const router = createBrowserRouter([
           {
             path: "/userinfo7",
             element: <Userinfo7/>,
+          },
+          {
+            path: "/successAccount",
+            element: <SuccessAccount/>,
           },
         ],
       },

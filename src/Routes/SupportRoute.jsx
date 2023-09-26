@@ -1,6 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import useSupport from "../Hooks/useSupport";
+import Loading from "../Shared/Loading";
 
 
 const SupportRoute = ({children}) => {
@@ -8,7 +9,7 @@ const SupportRoute = ({children}) => {
     const {user, loading} = useAuth();
     const [isInstructor, isInstructorLoading] = useSupport();
     if(loading || isInstructorLoading){
-        return <div className="text-center"><span className="loading loading-dots loading-lg"></span></div>
+        return <div className="text-center"><Loading></Loading></div>
     }
     if(user && isInstructor){
         return children;

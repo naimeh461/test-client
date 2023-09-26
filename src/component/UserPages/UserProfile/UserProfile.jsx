@@ -60,7 +60,7 @@ const UserProfile = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/deleteUser/${id}`, {
+        fetch(`https://soulmates-server.vercel.app/deleteUser/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -100,7 +100,7 @@ const UserProfile = () => {
         );
         axios
           .delete(
-            `http://localhost:5000/delPartner/${id}/${userInfo._id}/${partner._id}`
+            `https://soulmates-server.vercel.app/delPartner/${id}/${userInfo._id}/${partner._id}`
           )
           .then((response) => {
             if (response.data.deletedCount > 0) {
@@ -415,7 +415,7 @@ const SocialMedia = ({ gallery }) => {
           console.log(data.data.data.url)
           const imgLink = { img: data.data.data.url, userId: _id }
           console.log(imgLink)
-          axios.post('http://localhost:5000/galleryImg', imgLink)
+          axios.post('https://soulmates-server.vercel.app/galleryImg', imgLink)
             .then(data => {
               if (data.status == 200) {
                 setLoading(false)
@@ -505,7 +505,7 @@ const Plan = () => {
         if (data.status) {
           console.log(data.data.data.url)
           const imgLink = { img: data.data.data.url, userId: _id }
-          axios.post('http://localhost:5000/galleryImg', imgLink)
+          axios.post('https://soulmates-server.vercel.app/galleryImg', imgLink)
             .then(data => {
               if (data.status == 200) {
                 setLoading(false)

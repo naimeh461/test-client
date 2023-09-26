@@ -26,7 +26,7 @@ const SingleUserCard = ({ filteredUser }) => {
   const userPermission = () => {
     axios
       .put(
-        `http://localhost:5000/profileVisit?user=${userInfo?.email}`
+        `https://soulmates-server.vercel.app/profileVisit?user=${userInfo?.email}`
       )
       .then((response) => {
         if (response.data.modifiedCount > 0) {
@@ -57,13 +57,13 @@ const SingleUserCard = ({ filteredUser }) => {
   const putUserHandle = (visitUser) => {
     axios
       .get(
-        `http://localhost:5000/disableAddVstUser/${userInfo._id}/${_id}`
+        `https://soulmates-server.vercel.app/disableAddVstUser/${userInfo._id}/${_id}`
       )
       .then((response) => {
         if (!response.data) {
           axios
             .put(
-              `http://localhost:5000/addVstUser/${userInfo._id}`,
+              `https://soulmates-server.vercel.app/addVstUser/${userInfo._id}`,
               visitUser
             )
             .then((response) => {
@@ -82,14 +82,14 @@ const SingleUserCard = ({ filteredUser }) => {
     };
 
     axios
-      .get(`http://localhost:5000/showVstUser/${userInfo._id}`)
+      .get(`https://soulmates-server.vercel.app/showVstUser/${userInfo._id}`)
       .then((response) => {
         if (response.data.userId) {
           putUserHandle(visitUser);
         } else {
           axios
             .post(
-              `http://localhost:5000/pstVstUser/${userInfo._id}`,
+              `https://soulmates-server.vercel.app/pstVstUser/${userInfo._id}`,
               visitUser
             )
             .then((response) => {

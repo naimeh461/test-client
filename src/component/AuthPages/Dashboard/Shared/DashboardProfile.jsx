@@ -7,7 +7,7 @@ const DashboardProfile = () => {
   const [loading, setLoading]= useState(true)
   console.log(user,profileDatas);
   useEffect(() =>{
-    fetch(`http://localhost:5000/profileData/${user?.email}`)
+    fetch(`https://soulmates-server.vercel.app/profileData/${user?.email}`)
     .then(res => res.json())
     .then(data =>{
       setLoading(false)

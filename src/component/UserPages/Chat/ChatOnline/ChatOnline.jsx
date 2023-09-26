@@ -16,7 +16,7 @@ const ChatOnline = ({ onlineUsers, currentId, setCurrentChat , refetch}) => {
     const handleClick = async (user) => 
     {
         try{
-            const res =await axios.get(`http://localhost:5000/conversations/find/${currentId}/${user._id}`)
+            const res =await axios.get(`https://soulmates-server.vercel.app/conversations/find/${currentId}/${user._id}`)
             setCurrentChat(res.data)
             refetch()
         }

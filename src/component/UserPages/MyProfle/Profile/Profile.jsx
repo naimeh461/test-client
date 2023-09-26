@@ -3,16 +3,12 @@ import { BsArrowRightShort, BsTelephone } from "react-icons/bs";
 import { AiOutlineMail } from "react-icons/ai";
 import { CiLocationOn } from "react-icons/ci";
 import LightGallery from 'lightgallery/react';
-
+import noImg from "../../../../assets/other/blank.png"
 // import styles
 import 'lightgallery/css/lightgallery.css';
 import 'lightgallery/css/lg-zoom.css';
 import 'lightgallery/css/lg-thumbnail.css';
 import './style.css'
-import img2 from "../../../../assets/home/recommendation/girl.png";
-import img3 from "../../../../assets/home/recommendation/girl2.png";
-import img4 from "../../../../assets/home/recommendation/girl3.png";
-import img5 from "../../../../assets/home/recommendation/girl4.png";
 import location from "../../../../assets/other/location.svg";
 import share from "../../../../assets/other/share.svg";
 import bookmark from "../../../../assets/other/bookmark.svg";
@@ -20,17 +16,11 @@ import ages from "../../../../assets/other/age.svg";
 import heights from "../../../../assets/other/height.svg";
 import job from "../../../../assets/other/job.svg";
 import citys from "../../../../assets/other/city.svg";
-import facebook from "../../../../assets/other/facebook.svg";
-import linkedin from "../../../../assets/other/linkedin.svg";
-import insta from "../../../../assets/other/insta.svg";
-import twitter from "../../../../assets/other/twitter.svg";
 import { useEffect, useState } from "react";
-
 import { Link, useNavigate, useParams } from "react-router-dom";
 import FixedMet from "../metting/FixedMet";
 import useMyData from "../../../../Hooks/useMyData";
 import axios from "axios";
-import { RiUserUnfollowFill } from "react-icons/ri";
 import RelationSts from "../relationSts/RelationSts";
 import { performAction } from "../../../../utilities/utilities";
 
@@ -50,7 +40,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/specificUser/${params.id}`)
+    fetch(`https://soulmates-server.vercel.app/specificUser/${params.id}`)
       .then((res) => res.json())
       .then((data) => setUser(data));
   }, [params]);
@@ -98,7 +88,7 @@ const Profile = () => {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:5000/disableFav/${userInfo._id}/${user._id}`
+        `https://soulmates-server.vercel.app/disableFav/${userInfo._id}/${user._id}`
       )
       .then((response) => {
         if (response.data.userId) {
@@ -134,7 +124,7 @@ const Profile = () => {
     };
     axios
       .put(
-        `http://localhost:5000/makeUnfollow/${userInfo._id}`,
+        `https://soulmates-server.vercel.app/makeUnfollow/${userInfo._id}`,
         unfollow
       )
       .then((response) => {
@@ -147,7 +137,7 @@ const Profile = () => {
   const handleClick = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/conversations/find/${userInfo._id}/${params.id}`
+        `https://soulmates-server.vercel.app/conversations/find/${userInfo._id}/${params.id}`
       );
       console.log(res.data);
       navigate("/message");
@@ -181,8 +171,8 @@ const Profile = () => {
                   {/* sticky the photo */}
                   {/* photo gallery */}
                   <div className="flex flex-col lg:flex-row gap-2 ">
-                    <img className={user?.gallery ? "mx-auto h-[590px] rounded-2xl object-cover w-[95%] lg:w-[75%]  " : "w-[98%] mx-auto h-[590px] rounded-2xl object-cover "} src={profileImage} alt="" />
-
+                  {profileImage ?
+                    <img className={user?.gallery ? "mx-auto h-[590px] rounded-2xl object-cover object-top w-[95%] lg:w-[75%]  " : "w-[98%] mx-auto h-[590px] rounded-2xl object-cover object-top"} src={profileImage} alt="" /> : <img className={user?.gallery ? "mx-auto h-[590px] rounded-2xl object-cover object-top w-[95%] lg:w-[75%]  " : "w-[98%] mx-auto h-[590px] rounded-2xl object-cover object-top"} src={noImg} alt="" /> }
                     {/* Gallery imgs */}
                     <div className="flex  gap-8 md:gap-4 px-1 hide-scrollbar overflow-x-scroll lg:overflow-y-scroll lg:h-[590px] soulContainer">
                       {
@@ -235,11 +225,17 @@ const Profile = () => {
                 <div className="flex gap-4 items-start flex-col lg:flex-row">
                   {/* profile rounded img */}
                   <div className="w-full lg:w-auto">
-                    <img
+                   {profileImage  ? <img
                       className="h-[200px] w-[200px] mx-auto lg:h-[100px] lg:w-[100px] object-top object-cover rounded-full"
                       src={profileImage}
                       alt=""
-                    />
+                    /> :
+                    <img
+                      className="h-[200px] w-[200px] mx-auto lg:h-[100px] lg:w-[100px] object-top object-cover rounded-full"
+                      src={noImg}
+                      alt=""
+                    />}
+                    
                   </div>
                   {/* name and info */}
                   <div className="w-[80%]">
@@ -286,14 +282,6 @@ const Profile = () => {
                         <FixedMet partnerUserID={user?._id} />
 
                         <RelationSts partnerUser={user} />
-                      </div>
-                      <div className="flex gap-4">
-                        <button className="bg-[#A4B0C1] px-[15px] py-[10px] rounded-full">
-                          <img className="" src={share} alt="" />
-                        </button>
-                        <button className="bg-[#A4B0C1] px-[15px] py-[10px] rounded-full">
-                          <img className="" src={bookmark} alt="" />
-                        </button>
                       </div>
                     </div>
                   </div>

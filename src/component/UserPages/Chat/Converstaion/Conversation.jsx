@@ -8,7 +8,7 @@ const Conversation = ({ conversation, currentUser, messages, selected }) => {
         if (friendId) {
           const getUser = async () => {
             try {
-              const res = await axios.get(`http://localhost:5000/specificUser/${friendId}`);
+              const res = await axios.get(`https://soulmates-server.vercel.app/specificUser/${friendId}`);
               setUser(res.data);
             } catch (err) {
               console.error('Error fetching user data:', err);

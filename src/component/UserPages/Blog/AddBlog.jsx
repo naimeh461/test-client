@@ -28,7 +28,7 @@ const AddBlog = () => {
         const finalData = { title: blogData.title, details: blogData.details, type: blogData.type, image: res.data.data.url, react: 0, date: startDate, email : user.email}
         console.log({res, finalData})
         if(res.data.success){
-          axios.post('http://localhost:5000/blogs', finalData)
+          axios.post('https://soulmates-server.vercel.app/blogs', finalData)
             .then(res => {
               console.log(res)
               if (res.data.insertedId){

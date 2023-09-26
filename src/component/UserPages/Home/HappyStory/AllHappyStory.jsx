@@ -8,7 +8,7 @@ const AllHappyStory = () => {
   const params = useParams();
   const [happyStories, setHappyStories] = useState([]);
   useEffect(() => {
-      fetch(`http://localhost:5000/reviews`)
+      fetch(`https://soulmates-server.vercel.app/reviews`)
           .then(res => res.json())
           .then(data => setHappyStories(data));
   }, [params.id])

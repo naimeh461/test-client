@@ -1,6 +1,7 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import useMyData from "../../Hooks/useMyData";
+import { useNavigate } from "react-router-dom";
 // import './stripeStyle.css'
 
 const PaymentForm = ({ decodedData }) => {
@@ -11,11 +12,11 @@ const PaymentForm = ({ decodedData }) => {
   const [clientSecret, setClientSecret] = useState("");
   const [processing, setProcessing] = useState(false);
   const [transactionId, setTransactionId] = useState();
-
+  const navigate = useNavigate();
   // TODO: Take this data dynamicall
 
   useEffect(() => {
-    fetch("http://localhost:5000/create-payment-intent", {
+    fetch("https://soulmates-server.vercel.app/create-payment-intent", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -86,7 +87,7 @@ const PaymentForm = ({ decodedData }) => {
         status: "pending",
       };
 
-      fetch("http://localhost:5000/save-payments", {
+      fetch("https://soulmates-server.vercel.app/save-payments", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -94,7 +95,19 @@ const PaymentForm = ({ decodedData }) => {
         body: JSON.stringify(payment),
       })
         .then((res) => res.json())
-        .then((data) => console.log(data));
+        .then((data) => {
+          if (data.insertedId) {
+            const paymentInfo = {userId: userInfo._id,
+              name: userInfo.name,
+              email: userInfo.email,
+              transactionId: paymentIntent.id,
+              plan: decodedData.plan,
+              price: decodedData.price,}
+            navigate("/payment/success", {
+              state: paymentInfo
+            })
+          }
+        });
     }
   };
 
@@ -132,11 +145,6 @@ const PaymentForm = ({ decodedData }) => {
         >
           Pay
         </button>
-        {transactionId && (
-          <p className="text-green-500">
-            Your Transaction Id Is{transactionId}
-          </p>
-        )}
         {cardError && <p className="text-red-500">{cardError}</p>}
       </form>
     </div>

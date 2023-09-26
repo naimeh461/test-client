@@ -10,7 +10,7 @@ const useAuthData = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch(`http://localhost:5000/profileData/${user?.email}`);
+                const response = await fetch(`https://soulmates-server.vercel.app/profileData/${user?.email}`);
                 if (response.ok) {
                     const jsonData = await response.json();
                     setData(jsonData);

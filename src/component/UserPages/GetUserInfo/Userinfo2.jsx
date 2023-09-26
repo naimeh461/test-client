@@ -21,7 +21,7 @@ const Userinfo2 = () => {
     const [jobSector, setJobSector] = useState(null);
     const onSubmit = () => {
         const userinfo = { education: education.educationValue, qualifications: qualifications?.name, workingIn: workingIn.workingCategory, jobSector: jobSector?.name , salary: salary?.name , profile_complete:45 , id: userInfo._id}
-        fetch('http://localhost:5000/update2', {
+        fetch('https://soulmates-server.vercel.app/update2', {
             method: "PUT",
             headers: {
               "content-type" : "application/json"

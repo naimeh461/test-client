@@ -13,7 +13,7 @@ const MangeUsersX = () => {
 console.log(search);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/authority?search=${search.toLowerCase()}`)
+    fetch(`https://soulmates-server.vercel.app/authority?search=${search.toLowerCase()}`)
       .then((res) => res.json())
       .then((data) => {
         setUsers(data);
@@ -25,7 +25,7 @@ console.log(search);
   }, [search]);
 
   const handleMakeApprove = (id) => {
-    fetch(`http://localhost:5000/makeApprove/${id}`, {
+    fetch(`https://soulmates-server.vercel.app/makeApprove/${id}`, {
       method: "PATCH",
     })
       .then((res) => res.json())
@@ -46,7 +46,7 @@ console.log(search);
   };
 
   const handleMakeDenied = (id) => {
-    fetch(`http://localhost:5000/makeDenied/${id}`, {
+    fetch(`https://soulmates-server.vercel.app/makeDenied/${id}`, {
       method: "PATCH",
     })
       .then((res) => res.json())

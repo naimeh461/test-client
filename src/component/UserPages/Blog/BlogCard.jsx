@@ -11,7 +11,7 @@ import { useState } from "react";
 const BlogCard = ({ data, react, setReact }) => {
 const [love, setLove] = useState(false);
   const handleReactInc = id => {
-    fetch(`http://localhost:5000/blogs/${id}`, {
+    fetch(`https://soulmates-server.vercel.app/blogs/${id}`, {
       method: "PATCH",
     })
       .then(res => res.json())
@@ -22,7 +22,7 @@ const [love, setLove] = useState(false);
       })
   }
   const handleReactDec = id => {
-    fetch(`http://localhost:5000/blogss/${id}`, {
+    fetch(`https://soulmates-server.vercel.app/blogss/${id}`, {
       method: "PATCH",
     })
       .then(res => res.json())

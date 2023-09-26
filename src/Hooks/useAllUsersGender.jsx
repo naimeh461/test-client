@@ -9,7 +9,7 @@ const useAllUsersGender = () => {
     useEffect(() => {
         async function fetchData(gender) {
             try {
-                const response = await fetch(`http://localhost:5000/allUserGender/${gender}`);
+                const response = await fetch(`https://soulmates-server.vercel.app/allUserGender/${gender}`);
                 if (response.ok) {
                     const jsonData = await response.json();
                     setData(jsonData);

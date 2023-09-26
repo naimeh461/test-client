@@ -54,7 +54,7 @@ const Messenger = () => {
     useEffect(() => {
         const getConversations = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/conversations/' + userInfo._id);
+                const res = await axios.get('https://soulmates-server.vercel.app/conversations/' + userInfo._id);
                 setConversations(res.data);
             } catch (err) {
                 console.log(err);
@@ -66,7 +66,7 @@ const Messenger = () => {
     useEffect(() => {
         const getMessages = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/messages/' + currentChat?._id);
+                const res = await axios.get('https://soulmates-server.vercel.app/messages/' + currentChat?._id);
                 setMessages(res.data);
             } catch (err) {
                 console.log(err);
@@ -80,7 +80,7 @@ const Messenger = () => {
         for (const conversation of conversations) {
             try {
                 const res = await axios.get(
-                    `http://localhost:5000/messages/${conversation._id}`
+                    `https://soulmates-server.vercel.app/messages/${conversation._id}`
                 );
                 const lastMessage = res.data[res.data.length - 1];
                 lastMessages.push(lastMessage);
@@ -103,7 +103,7 @@ const Messenger = () => {
                 const friendId = currentChat.members.find((m) => m !== userInfo._id);
                 try {
                     const res = await axios.get(
-                        `http://localhost:5000/specificUser/${friendId}`
+                        `https://soulmates-server.vercel.app/specificUser/${friendId}`
                     );
                     setFriend(res.data);
                 } catch (err) {
@@ -132,7 +132,7 @@ const Messenger = () => {
         });
 
         try {
-            const res = await axios.post('http://localhost:5000/messages', message);
+            const res = await axios.post('https://soulmates-server.vercel.app/messages', message);
             setMessages([...messages, res.data]);
             setNewMessages('');
         } catch (err) {

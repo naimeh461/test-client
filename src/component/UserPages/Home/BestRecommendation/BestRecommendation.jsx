@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import useMyData from "../../../../Hooks/useMyData";
 import { SwiperNavButtons } from "./SwiperNavButton";
 import useAllUsersGender from "../../../../Hooks/useAllUsersGender";
-
+import noImg from "../../../../assets/other/blank.png"
 const BestRecommendation = () => {
 
   const [userData] = useAllUsersGender();
@@ -49,7 +49,7 @@ const BestRecommendation = () => {
               <Link to={`/profile/${item?._id}`}>
                 {/* SwiperSlide content */}
                 <div className="relative rounded-2xl overflow-hidden hover:scale-105 duration-300 hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] mt-10">
-                  <img className="rounded-xl object-cover w-[300px] h-[300px]" src={item?.profileImage} alt="" />
+                 {item?.profileImage ?  <img className="rounded-xl object-cover w-[300px] h-[300px]" src={item?.profileImage} alt="" /> : <img className="rounded-xl object-cover w-[300px] h-[300px]" src={noImg} alt="" />}
                   <div className="bg-slate-950 text-[#F0F2F5] absolute bottom-0 rounded bg-opacity-50 rounded-t-2xl h-0 py-0 px-4 group-hover:py-4 duration-300 w-full group-hover:h-[135px] rounded-b-2xl">
                     <p className="text-[22px] font-alice mb-1 ">{item?.name}</p> <br />
                     <p className="font-lato text-[16px] ">{item?.country}</p>

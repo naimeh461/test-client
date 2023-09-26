@@ -19,18 +19,18 @@ const Service = () => {
   const [hotel, setHotel] = useState([]);
  
   useEffect(() => {
-    fetch("http://localhost:5000/service/catering")
+    fetch("https://soulmates-server.vercel.app/service/catering")
       .then((res) => res.json())
       .then((data) => setCatering(data));
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:5000/service/photography")
+    fetch("https://soulmates-server.vercel.app/service/photography")
       .then((res) => res.json())
       .then((data) => setPhotography(data));
   }, []);
   useEffect(() => {
-    fetch("http://localhost:5000/service/hotel")
+    fetch("https://soulmates-server.vercel.app/service/hotel")
       .then((res) => res.json())
       .then((data) => setHotel(data));
   }, []);

@@ -18,7 +18,7 @@ const PaymentHistory = () => {
     // Check if user and user.uid are not null or undefined
     if (user && user._id) {
       console.log(user)
-      fetch(`http://localhost:5000/paymentHistory/${user._id}`)
+      fetch(`https://soulmates-server.vercel.app/paymentHistory/${user._id}`)
         .then((res) => res.json())
         .then((data) => {
           console.log(data)

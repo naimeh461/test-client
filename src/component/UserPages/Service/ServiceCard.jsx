@@ -21,7 +21,7 @@ const ServiceCard = () => {
       price: price,
     };
     if(user && user.email){
-    fetch(`http://localhost:5000/bookedService`, {
+    fetch(`https://soulmates-server.vercel.app/bookedService`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
