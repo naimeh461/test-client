@@ -11,6 +11,7 @@ import { heightOptions, marital_status, religions, weightOptions, working_In, } 
 import { Range } from "react-range";
 import { Listbox, Transition } from "@headlessui/react";
 import { HiCheck, HiChevronUpDown } from "react-icons/hi2";
+import {  RxCross2 } from "react-icons/rx";
 import { Country, State } from "country-state-city";
 import SingleUserCard from "./SingleUserCard";
 import useAllUsersGender from "../../../Hooks/useAllUsersGender";
@@ -23,20 +24,29 @@ const AllUser = () => {
   const [filteredUsers, setFilteredUsers] = useState(userData);
   const [maritalStatus, setMaritalStatus] = useState(null);
   const [religionStatus, setReligionStatus] = useState(null);
-  const [ageRange, setAgeRange] = useState([18, 60]);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [state, setState] = useState(null);
   const [stateData, setStateData] = useState();
   let countryData = Country.getAllCountries();
-  const [height, setheight] = useState(null);
+  const [height, setHeight] = useState(null);
   const [weight, setWeight] = useState(null);
   const [job, setJob] = useState(null);
 
-
-  const handleAgeChange = (newAgeRange) => {
-    setAgeRange(newAgeRange);
+  const [ageRange, setAgeRange] = useState({ min: 18, max: 100 });
+  console.log(ageRange)
+  const handleMinAgeChange = (e) => {
+    const newMinAge = parseInt(e.target.value, 10);
+    if (newMinAge <= ageRange.max) {
+      setAgeRange({ ...ageRange, min: newMinAge });
+    }
   };
 
+  const handleMaxAgeChange = (e) => {
+    const newMaxAge = parseInt(e.target.value, 10);
+    if (newMaxAge >= ageRange.min) {
+      setAgeRange({ ...ageRange, max: newMaxAge });
+    }
+  };
   useEffect(() => {
     setStateData(State.getStatesOfCountry(selectedCountry?.isoCode));
   }, [selectedCountry]);
@@ -78,7 +88,7 @@ const AllUser = () => {
       }
       if (ageRange !== null) {
         filteredData = filteredData.filter(
-          (user) => user.age >= ageRange[0] && user.age <= ageRange[1]
+          (user) => user.age >= ageRange?.min && user.age <= ageRange?.max
         );
       }
       if (selectedCountry !== null) {
@@ -98,11 +108,11 @@ const AllUser = () => {
       }
       if (weight !== null) {
         filteredData = filteredData.filter(
-          (user) => user.weight === weight?.name
+          (user) => user.weight === weight
         );
       }
       if (height !== null) {
-        const selectedHeight = parseHeightString(height?.name);
+        const selectedHeight = parseHeightString(height);
         filteredData = filteredData.filter((user) => {
           const userHeightInches = parseHeightString(user.height);
           return userHeightInches >= selectedHeight;
@@ -118,11 +128,11 @@ const AllUser = () => {
   const handleDelFilter = () => {
     setMaritalStatus(null)
     setReligionStatus(null)
-    setAgeRange([18, 60])
+    setAgeRange({ min: 18, max: 100 })
     setSelectedCountry(null)
     setState(null)
     setStateData(null)
-    setheight(null);
+    setHeight(null);
     setWeight(null);
     setJob(null);
 
@@ -145,9 +155,9 @@ const AllUser = () => {
 
   const Filter = () => {
     return (
-      < div className="">
-        <div className="">
-          <div className="dark:bg-gray-500 p-2 rounded-xl  lg:w-[350px]">
+      
+ 
+          <div className="dark:bg-gray-500 p-2 rounded-xl  lg:w-[350px]  ">
             <div className=" mx-auto hidden lg:block ">
               <div className="flex justify-between items-center w-[80%] mx-auto ">
                 <div className="flex justify-center items-center">
@@ -158,15 +168,15 @@ const AllUser = () => {
                 </div>
                 <div
                   onClick={handleDelFilter}
-                  className="outline  text-red-500  rounded-full outline-2 outline-red-500 outline-offset-0 px-4 hover:bg-red-100  "
+                  className="outline text-lg font-semibold text-red-500  rounded-full outline-2 outline-red-500 outline-offset-0 px-4 hover:bg-red-100 flex justify-center items-center gap-2 "
                 >
-                  clear
+                  Clear all <RxCross2/>
                 </div>
 
               </div>
               <hr className="my-2 h-0.5 border-t-0 bg-[#595E73] opacity-100 dark:opacity-50 mt-4"></hr>
             </div>
-            <div className="lg:h-[500px] ov">
+            <div className="lg:h-[600px] lg:overflow-y-auto pb-10">
               <div className="w-[80%] mx-auto pb-10 ">
                 <div className="">
                   {/* For Marital Status */}
@@ -196,7 +206,7 @@ const AllUser = () => {
                                 checked={maritalStatus?.includes(marriage.name)}
                               />
                               <div
-                                className={`max-w-xl rounded-3xl p-1 text-gray-600 hover:shadow bg-[#e0e1e8] font-lato ${maritalStatus === marriage?.name
+                                className={`max-w-xl rounded-3xl p-1 text-gray-600 hover:shadow bg-[#e3e3e7] font-lato ${maritalStatus === marriage?.name
                                   ? "ring-2  peer-checked:text-[#51ac83]  peer-checked:ring-[#51ac83]  "
                                   : "bg-gray-100"
                                   }`}
@@ -249,7 +259,7 @@ const AllUser = () => {
                               checked={religionStatus?.includes(value.name)}
                             />
                             <div
-                              className={`max-w-xl rounded-3xl p-1 text-gray-600 hover:shadow bg-[#e0e1e8] ${religionStatus === value?.name
+                              className={`max-w-xl rounded-3xl p-1 text-gray-600 hover:shadow bg-[#e3e3e7]  ${religionStatus === value?.name
                                 ? "ring-2  peer-checked:text-[#51ac83]  peer-checked:ring-[#51ac83] "
                                 : "bg-gray-100"
                                 }`}
@@ -296,7 +306,7 @@ const AllUser = () => {
                               checked={job?.includes(value.name)}
                             />
                             <div
-                              className={`max-w-xl rounded-3xl p-1 text-gray-600 hover:shadow bg-[#e0e1e8] ${job === value?.name
+                              className={`max-w-xl rounded-3xl p-1 text-gray-600 hover:shadow bg-[#e3e3e7] ${job === value?.name
                                 ? "ring-2  peer-checked:text-[#51ac83]  peer-checked:ring-[#51ac83] "
                                 : "bg-gray-100"
                                 }`}
@@ -321,302 +331,148 @@ const AllUser = () => {
                   </div>
                 </div>
                 {/* age */}
-                <div className="flex flex-col  mt-10 ">
+                <div className="mt-8 ">
                   <label
-                    className="text-black text-[18px] font-alice mb-10 text-left dark:text-white"
+                    className="text-black text-[18px] font-alice text-left dark:text-white"
                     htmlFor="emailAddress"
                   >
                     Age
                   </label>
-                  <div className="flex items-center space-x-4 ">
-                    <Range
-                      values={ageRange}
-                      step={1}
-                      min={18}
-                      max={100}
-                      onChange={handleAgeChange}
-                      renderTrack={({ props, children }) => (
-                        <div
-                          {...props}
-                          className="h-1 bg-gray-950 rounded-full "
-                          style={{
-                            ...props.style,
-                            height: "6px",
-                            width: "80%",
-                            backgroundColor: "#ccc",
-                          }}
-                        >
-                          {children}
-                        </div>
-                      )}
-                      renderThumb={({ props, index }) => (
-                        <div
-                          {...props}
-                          className="h-4 w-4 bg-[#51ac83] rounded-full shadow flex items-center justify-center relative"
-                        >
-                          <span
-                            className={`absolute -top-8  text-white  bg-[#21754f] p-[3px]  rounded-sm tooltip text-xs  ${index === 0 ? "left-0" : "-right-[2px]"
-                              }`}
-                          >
-                            {ageRange[index]}
-                          </span>
-                        </div>
-                      )}
-                    />
+                  <div className="md:flex gap-5">
+                    <div className="form-control w-1/2">
+                    <label className="label">
+                      <span className="label-text dark:text-white  -mb-2">From</span>
+                    </label>
+                      <div>
+                        <select id="minAge" value={ageRange.min} onChange={handleMinAgeChange}       className="w-full cursor-pointer rounded-lg bg-white py-2 pl-2 mt-2 text-[#536279] shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-[#51ac83] sm:text-sm">
+                          {Array.from({ length: 100 - 18 + 1 }, (_, i) => (<option key={i} value={18 + i}>{18 + i}</option>))}
+                        </select>
+                     </div>
+                    </div>
+
+                    <div className="form-control w-1/2">
+                    <label className="label">
+                      <span className="label-text dark:text-white -mb-2">To</span>
+                    </label>
+                      <div>
+                        <select
+                          id="maxAge" value={ageRange.max} onChange={handleMaxAgeChange}       className="w-full cursor-pointer rounded-lg bg-white py-2 pl-2 mt-2 text-[#536279] shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-[#51ac83] sm:text-sm">
+                          {Array.from({ length: 100 - ageRange.min + 1 }, (_, i) => (
+                            <option key={i} value={ageRange.min + i}>
+                              {ageRange.min + i}
+                            </option>
+                          ))}
+                        </select>
+                     </div>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Location */}
 
-              <div className="flex flex-col  mt-1  w-[80%] mx-auto">
-                <label
-                  className="text-black text-[18px] font-alice  text-left dark:text-white"
-                  htmlFor="emailAddress"
-                >
-                  Location
-                </label>
-                <div className="flex gap-5 ">
-                  <Listbox
-                    value={setSelectedCountry}
-                    onChange={setSelectedCountry}
-                  >
-                    <Listbox.Button className=" relative w-full cursor-default rounded-lg bg-white py-2 pl-2 mt-2 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm ">
-                      <span className="block truncate text-sm text-[#536279]">
-                        {selectedCountry
-                          ? selectedCountry?.name
-                          : "Select Country"}
-                      </span>
-                      <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center ">
-                        <HiChevronUpDown
-                          className="h-5 w-5 text-gray-400 mr-3"
-                          aria-hidden="true"
-                        />
-                      </span>
-                    </Listbox.Button>
-                    <Transition
-                      as={Fragment}
-                      leave="transition ease-in duration-100"
-                      leaveFrom="opacity-100"
-                      leaveTo="opacity-0"
-                    >
-                      <Listbox.Options className="z-30 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                        {countryData.map((country, index) => (
-                          <Listbox.Option
-                            key={index}
-                            className={({ active }) =>
-                              `relative cursor-default select-none py-2 pl-10 pr-4 ${active
-                                ? "bg-amber-100 text-amber-900"
-                                : "text-gray-900"
-                              }`
-                            }
-                            value={country}
-                          >
-                            {({ selected }) => (
-                              <>
-                                <span
-                                  className={`block truncate ${selected ? "font-medium" : "font-normal"
-                                    }`}
-                                >
-                                  {country.name}
-                                </span>
-                                {selected ? (
-                                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                                    <HiCheck
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
-                                  </span>
-                                ) : null}
-                              </>
-                            )}
-                          </Listbox.Option>
-                        ))}
-                      </Listbox.Options>
-                    </Transition>
-                  </Listbox>
 
-                  {selectedCountry?.name ? (
-                    <>
-                      <Listbox value={setState} onChange={setState}>
-                        <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-2 mt-2 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                          <span className="block truncate text-sm text-[#536279]">
-                            {state ? state?.name : "Select State"}
-                          </span>
-                          <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center ">
-                            <HiChevronUpDown
-                              className="h-5 w-5 text-gray-400 mr-3"
-                              aria-hidden="true"
-                            />
-                          </span>
-                        </Listbox.Button>
-                        <Transition
-                          as={Fragment}
-                          leave="transition ease-in duration-100"
-                          leaveFrom="opacity-100"
-                          leaveTo="opacity-0"
-                        >
-                          <Listbox.Options className="z-20 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                            {stateData.map((value, index) => (
-                              <Listbox.Option
-                                key={index}
-                                className={({ active }) =>
-                                  `relative cursor-default select-none py-2 pl-10 pr-4 ${active
-                                    ? "bg-amber-100 text-amber-900"
-                                    : "text-gray-900"
-                                  }`
-                                }
-                                value={value}
-                              >
-                                {({ selected }) => (
-                                  <>
-                                    <span
-                                      className={`block truncate ${selected ? "font-medium" : "font-normal"
-                                        }`}
-                                    >
-                                      {value.name}
-                                    </span>
-                                    {selected ? (
-                                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                                        <HiCheck
-                                          className="h-5 w-5"
-                                          aria-hidden="true"
-                                        />
-                                      </span>
-                                    ) : null}
-                                  </>
-                                )}
-                              </Listbox.Option>
-                            ))}
-                          </Listbox.Options>
-                        </Transition>
-                      </Listbox>
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              </div>
-              <div className="flex flex-col  mt-8  w-[80%] mx-auto ">
+              <div className=" w-[80%] mx-auto">
                 <label
-                  className="text-black text-[18px] font-alice  text-left dark:text-white"
+                  className="text-black text-[18px] font-alice text-left dark:text-white"
                   htmlFor="emailAddress"
                 >
                   Body Measurements
                 </label>
-                <div className="flex gap-5 ">
-                  <Listbox value={setheight} onChange={setheight}>
-                    <Listbox.Button className=" relative w-1/2 cursor-default rounded-lg bg-white py-2 pl-2 mt-2 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm ">
-                      <span className="block truncate text-sm text-[#536279]">
-                        {height ? height?.name : "Select height"}
-                      </span>
-                      <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center ">
-                        <HiChevronUpDown
-                          className="h-5 w-5 text-gray-400 mr-3"
-                          aria-hidden="true"
-                        />
-                      </span>
-                    </Listbox.Button>
-                    <Transition
-                      as={Fragment}
-                      leave="transition ease-in duration-100"
-                      leaveFrom="opacity-100"
-                      leaveTo="opacity-0"
-                    >
-                      <Listbox.Options className="z-30 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                        {heightOptions.map((value) => (
-                          <Listbox.Option
-                            key={value.id}
-                            className={({ active }) =>
-                              `relative cursor-default select-none py-2 pl-10 pr-4 ${active
-                                ? "bg-amber-100 text-amber-900"
-                                : "text-gray-900"
-                              }`
-                            }
-                            value={value}
-                          >
-                            {({ selected }) => (
-                              <>
-                                <span
-                                  className={`block truncate ${selected ? "font-medium" : "font-normal"
-                                    }`}
-                                >
-                                  {value.name}
-                                </span>
-                                {selected ? (
-                                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                                    <HiCheck
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
-                                  </span>
-                                ) : null}
-                              </>
-                            )}
-                          </Listbox.Option>
-                        ))}
-                      </Listbox.Options>
-                    </Transition>
-                  </Listbox>
-                  <Listbox value={setWeight} onChange={setWeight}>
-                    <Listbox.Button className="w-1/2 relative  cursor-default rounded-lg  bg-white py-2 pl-2 mt-2 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm ">
-                      <span className="block truncate text-sm text-[#536279]">
-                        {weight ? weight?.name : "Select weight"}
-                      </span>
-                      <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center ">
-                        <HiChevronUpDown
-                          className="h-5 w-5 text-gray-400 mr-3"
-                          aria-hidden="true"
-                        />
-                      </span>
-                    </Listbox.Button>
-                    <Transition
-                      as={Fragment}
-                      leave="transition ease-in duration-100"
-                      leaveFrom="opacity-100"
-                      leaveTo="opacity-0"
-                    >
-                      <Listbox.Options className="z-30 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                        {weightOptions.map((value) => (
-                          <Listbox.Option
-                            key={value.id}
-                            className={({ active }) =>
-                              `relative cursor-default select-none py-2 pl-10 pr-4 ${active
-                                ? "bg-amber-100 text-amber-900"
-                                : "text-gray-900"
-                              }`
-                            }
-                            value={value}
-                          >
-                            {({ selected }) => (
-                              <>
-                                <span
-                                  className={`block truncate ${selected ? "font-medium" : "font-normal"
-                                    }`}
-                                >
-                                  {value.name}
-                                </span>
-                                {selected ? (
-                                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                                    <HiCheck
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
-                                  </span>
-                                ) : null}
-                              </>
-                            )}
-                          </Listbox.Option>
-                        ))}
-                      </Listbox.Options>
-                    </Transition>
-                  </Listbox>
+                <div className="md:flex gap-5">
+                  {/* Height Selection */}
+                  <select
+                    value={height}
+                    onChange={(e) => setHeight(e.target.value)}
+                    className="md:w-1/2 w-full mb-2 md:mb-0 cursor-pointer rounded-lg bg-white py-2 pl-2 mt-2 text-[#536279] shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-[#51ac83] sm:text-sm"
+                  >
+                    <option value="">Select Height</option>
+                    {heightOptions.map((value) => (
+                      <option key={value.id} value={value.name}>
+                        {value.name}
+                      </option>
+                    ))}
+                  </select>
+
+                  {/* Weight Selection */}
+                  <select
+                    value={weight}
+                    onChange={(e) => setWeight(e.target.value)}
+                    className="md:w-1/2 w-full cursor-pointer rounded-lg bg-white py-2 pl-2 mt-2 text-[#536279] shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-[#51ac83] sm:text-sm"
+                  >
+                    <option value="">Select Weight</option>
+                    {weightOptions.map((value) => (
+                      <option key={value.id} value={value.name}>
+                        {value.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
+              </div>
+              {/* Location */}
+              <div className="flex flex-col w-[80%] mt-8 mx-auto">
+                <label
+                  className="text-black text-[18px] font-alice text-left dark:text-white"
+                  htmlFor="emailAddress"
+                >
+                  Location
+                </label>
+                <div className="md:flex gap-5">
+                  <div>
+                    <label className="label">
+                      <span className="label-text dark:text-white -mb-2">Country</span>
+                    </label>
+                    <select
+                      id="selectedCountry"
+                      value={selectedCountry?.name || ""}
+                      onChange={(e) => {
+                        const selectedCountryName = e.target.value;
+                        const selectedCountryObject = countryData.find(
+                          (country) => country.name === selectedCountryName
+                        );
+                        setSelectedCountry(selectedCountryObject);
+                      }}
+                      className="w-full cursor-pointer rounded-lg bg-white py-2 pl-2 mt-2 text-[#536279] shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-[#51ac83] sm:text-sm"   >
+                      <option value="">Select Country</option>
+                      {countryData.map((country, index) => (
+                        <option key={index} value={country.name}>
+                          {country.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    {selectedCountry && (
+                      <>
+                        <label className="label">
+                          <span className="label-text dark:text-white -mb-2">State</span>
+                        </label>
+                        <div className="">
+                          <select
+                            id="selectedState"
+                            value={state || ""}
+                            onChange={(e) => setState(e.target.value)}
+                            className="w-full cursor-pointer rounded-lg bg-white py-2 pl-2 mt-2 text-[#536279] shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-[#51ac83] sm:text-sm"  >
+                            <option value="">Select State</option>
+                            {stateData?.map((value, index) => (
+                              <option key={index} value={value.name}>
+                                {value.name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
-        </div>
-      </div>
+
+
+
+
     );
   }
 
@@ -642,8 +498,8 @@ const AllUser = () => {
 
 
       {/* Filter lg */}
-      <div className="lg:flex select-none z-20 dark:bg-gray-800 sticky top-0  ">
-        <div className="hidden lg:block py-8 bg-[#F0F2F5] w-[350px]  dark:bg-gray-500 dark:text-white h-[1200px] sticky top-0">
+      <div className="lg:flex select-none z-20 dark:bg-gray-800 ">
+        <div className="hidden lg:block py-8 bg-[#F0F2F5] w-[350px] dark:bg-gray-500 dark:text-white h-[700px] mt-10 ml-10 rounded-2xl sticky top-10">
           <Filter></Filter>
         </div>
 

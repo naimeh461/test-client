@@ -71,7 +71,10 @@ const SingleUserCard = ({ filteredUser }) => {
                 userPermission();
               }
             });
-        }
+          }
+          else {
+            userPermission();
+          }
       });
   };
 

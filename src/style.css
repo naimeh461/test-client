@@ -26,3 +26,13 @@
   color: gray;
   background-color: transparent;
 }
+
+.filter-container {
+  position: sticky;
+  top: 0;
+  width: 350px; 
+  padding-top: 10px; 
+  padding-bottom: 10px; 
+  background-color: #F0F2F5; 
+  z-index: 10; 
+}

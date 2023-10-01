@@ -58,6 +58,7 @@ const Plans = () => {
             <p className="text-[#3E4A5B]">
               Upgrade to Find Your Forever, <br /> Exclusive Benefits Await
             </p>
+            
             <p className="flex text-[#536279] font-lato pt-7">
               <img className="mr-1" src={home} alt="" />
               <Link to="/">Home</Link> <span className="mx-2">/</span>
@@ -166,6 +167,7 @@ const Header = ({ isPopular, title, titleImg, price, profileCount, bg }) => {
       <img className="absolute -z-10 inset-0" src={bg} alt="" />
       <div className="px-5 pt-9">
         <div className="flex justify-between ">
+          
           <div className="flex items-center gap-2">
             <img className="w-9 h-9" src={titleImg} alt="" />
             <p className="text-[36px] font-alice dark:text-white">{title}</p>

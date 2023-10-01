@@ -63,6 +63,7 @@ const SearchFunction = () => {
                   <HiChevronUpDown className="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-400 pointer-events-none h-5 w-5 mr-3" aria-hidden="true" />
                 </div>
               </div>
+              
               <div className="form-control w-1/2">
                 <label className="label">
                   <span className="label-text">To</span>
@@ -82,7 +83,7 @@ const SearchFunction = () => {
             </div>
           </div>
 
-          
+
           {/* Religion */}
           <div className="form-control w-full">
             <span className=" text-[18px] text-[#2A313C] font-medium ">Religion</span>
@@ -174,7 +175,7 @@ const SearchFunction = () => {
               </div>
             </div>
           </div>
-              
+
           <div className="">
             <button className="bg-primary-500 text-white w-full py-2 rounded-full mt-4 btn hover:bg-primary-600">Search</button>
           </div>
